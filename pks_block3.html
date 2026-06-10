@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PKS Block 3 &mdash; Prozess &amp; Lage &middot; Deutsche Telekom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+  @font-face { font-family: "TeleNeoWeb"; font-weight: 400; font-display: swap;
+    src: url("../../../telekom_design/Fonts/TeleNeoWeb-Regular.woff2") format("woff2"); }
+  @font-face { font-family: "TeleNeoWeb"; font-style: italic; font-weight: 400; font-display: swap;
+    src: url("../../../telekom_design/Fonts/TeleNeoWeb-RegularItalic.woff2") format("woff2"); }
+  @font-face { font-family: "TeleNeoWeb"; font-weight: 500; font-display: swap;
+    src: url("../../../telekom_design/Fonts/TeleNeoWeb-Medium.woff2") format("woff2"); }
+  @font-face { font-family: "TeleNeoWeb"; font-weight: 700; font-display: swap;
+    src: url("../../../telekom_design/Fonts/TeleNeoWeb-Bold.woff2") format("woff2"); }
+  @font-face { font-family: "TeleNeoWeb"; font-weight: 800; font-display: swap;
+    src: url("../../../telekom_design/Fonts/TeleNeoWeb-ExtraBold.woff2") format("woff2"); }
+
+  :root {
+    --magenta: #E20074;
+    --magenta-dark: #B8005F;
+    --magenta-tint: #FDE8F2;
+    --magenta-tint-2: #F9D1E3;
+    --ink: #0A0A0A;
+    --ink-2: #1A1A1A;
+    --gray-90: #2A2A2A;
+    --gray-70: #4A4A4A;
+    --gray-50: #7A7A7A;
+    --gray-30: #C4C4C4;
+    --gray-15: #E8E8E8;
+    --gray-05: #F5F5F3;
+    --paper: #FAFAF7;
+    --white: #FFFFFF;
+    --yellow: #FFD500;
+    --danger: #D91308;
+    --success: #00774B;
+    --amber: #FFB800;
+    --amber-soft: #FFF8E0;
+    --blue: #1f6fb2;
+    --purple: #7A3FBF;
+    --font: "TeleNeoWeb", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ---------- DECK ---------- */
+  .deck {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    background: var(--paper);
+    display: none;
+    overflow: hidden;
+    padding: 40px 72px;
+  }
+  .slide.active {
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.45s ease;
+  }
+  .slide.cover.active {
+    flex-direction: row;
+  }
+  .slide.dense .slide-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- BODY HELPERS ---------- */
+  .slide-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 0;
+  }
+  .slide-body.center {
+    justify-content: center;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    font-weight: 600;
+    margin-bottom: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 28px; height: 1px;
+    background: var(--magenta);
+  }
+
+  h1.title {
+    font-family: var(--font);
+    font-weight: 800;
+    font-size: clamp(40px, 5.4vw, 88px);
+    line-height: 0.97;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+  h1.title em { font-style: italic; color: var(--magenta); }
+
+  h2.title {
+    font-family: var(--font);
+    font-weight: 800;
+    font-size: clamp(28px, 3.6vw, 52px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+  }
+  h2.title em { font-style: italic; color: var(--magenta); }
+  h2.title.tight { margin-bottom: 12px; }
+
+  .lede {
+    font-size: clamp(16px, 1.4vw, 22px);
+    line-height: 1.5;
+    color: var(--gray-70);
+    max-width: 76ch;
+    font-weight: 400;
+  }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  .mono { font-family: var(--mono); }
+
+  /* ---------- GRIDS ---------- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* ---------- CARDS ---------- */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--gray-15);
+    padding: 28px;
+  }
+  .card.accent { border-left: 4px solid var(--magenta); }
+  .card.danger { border-left: 4px solid var(--danger); }
+  .card.success { border-left: 4px solid var(--success); }
+  .card.blue { border-left: 4px solid var(--blue); }
+  .card .card-num {
+    font-family: var(--font);
+    font-style: italic;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--magenta);
+    margin-bottom: 16px;
+  }
+  .card .card-label {
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-50);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .card h3 {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .card p {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--gray-70);
+  }
+  .card p strong { color: var(--ink); }
+
+  /* ---------- CONTEXT STRIP ---------- */
+  .context-strip {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 18px 28px;
+    background: var(--amber-soft);
+    border: 1px solid #f0dca0;
+    margin-top: 16px;
+  }
+  .context-strip .ctx-icon {
+    font-family: var(--font);
+    font-style: italic;
+    font-size: 28px;
+    color: #9a7400;
+    white-space: nowrap;
+  }
+  .context-strip p {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .context-strip p strong { font-weight: 700; }
+
+  /* ---------- TABLE ---------- */
+  table.matrix { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  table.matrix th { background: var(--ink); color: #fff; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; font-weight: 600; padding: 12px 14px; text-align: left; text-transform: uppercase; }
+  table.matrix td { padding: 12px 14px; border-bottom: 1px solid var(--gray-15); color: var(--gray-90); vertical-align: top; }
+  table.matrix tr:nth-child(even) td { background: var(--white); }
+  table.matrix td strong { color: var(--ink); }
+
+  /* ---------- QUESTION BAR ---------- */
+  .question-bar {
+    background: var(--ink);
+    padding: 32px 44px;
+    margin-top: 18px;
+  }
+  .question-bar .qb-kicker {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .question-bar p {
+    font-family: var(--font);
+    font-size: 24px;
+    color: var(--white);
+    line-height: 1.3;
+    font-weight: 400;
+  }
+  .question-bar p em { font-style: italic; color: var(--magenta-tint); }
+
+  /* ---------- SOURCE ---------- */
+  .source {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--gray-50);
+    margin-top: auto;
+    padding-top: 12px;
+  }
+
+  /* ---------- SECTION DIVIDER ---------- */
+  .slide.divider { background: var(--ink); }
+  .slide.divider.active { justify-content: center; }
+  .divider .div-kicker { font-family: var(--mono); font-size: 14px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--magenta); font-weight: 600; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 14px; }
+  .divider .div-kicker::before { content: ""; width: 36px; height: 1px; background: var(--magenta); }
+  .divider h2 { font-family: var(--font); font-weight: 800; font-size: clamp(40px, 5vw, 76px); line-height: 1.0; letter-spacing: -0.02em; color: #fff; max-width: 22ch; }
+  .divider h2 em { font-style: italic; color: var(--magenta); }
+  .divider .div-lede { font-size: clamp(16px, 1.5vw, 21px); line-height: 1.5; color: rgba(255,255,255,0.7); max-width: 60ch; margin-top: 26px; }
+  .divider .div-lede strong { color: #fff; font-weight: 600; }
+  .divider .div-steps { display: flex; gap: 14px; margin-top: 40px; }
+  .divider .div-step { font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em; color: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.2); padding: 10px 16px; }
+  .divider .div-step.on { color: var(--magenta); border-color: var(--magenta); font-weight: 600; }
+
+  /* ---------- FULLSCREEN BUTTON ---------- */
+  .fullscreen-btn {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 60;
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid var(--gray-15);
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    color: var(--ink);
+  }
+  .fullscreen-btn:hover {
+    background: var(--magenta);
+    color: var(--white);
+    border-color: var(--magenta);
+  }
+  .fullscreen-btn svg {
+    width: 20px; height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ---------- NAV CONTROLS ---------- */
+  .nav {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 50;
+    display: flex;
+    gap: 8px;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid var(--gray-15);
+    padding: 8px;
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  .nav button {
+    background: var(--white);
+    border: 1px solid var(--gray-15);
+    color: var(--ink);
+    width: 36px; height: 36px;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav button:hover {
+    background: var(--magenta);
+    color: var(--white);
+    border-color: var(--magenta);
+  }
+  .nav button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .nav button:disabled:hover {
+    background: var(--white); color: var(--ink); border-color: var(--gray-15);
+  }
+  .nav .counter {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    color: var(--gray-70);
+    font-weight: 600;
+  }
+  .nav .counter strong { color: var(--magenta); }
+
+  /* ---------- DOTS NAV ---------- */
+  .dots-nav {
+    position: fixed;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gray-30);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    padding: 0;
+  }
+  .dot:hover { background: var(--magenta); transform: scale(1.3); }
+  .dot.active { background: var(--magenta); width: 22px; border-radius: 4px; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1100px) {
+    .slide { padding: 28px 48px; }
+    .eyebrow { margin-bottom: 12px; font-size: 14px; }
+    h1.title { font-size: 48px; }
+    h2.title { font-size: 32px; margin-bottom: 10px; }
+    .lede { font-size: 14px !important; line-height: 1.35; }
+    .three-col, .two-col { grid-template-columns: 1fr; }
+    .dots-nav { display: none; }
+    .nav {
+      right: 12px;
+      bottom: 12px;
+      transform: scale(0.88);
+      transform-origin: bottom right;
+    }
+  }
+
+  @page { size: 13.333in 7.5in landscape; margin: 0; }
+  @media print {
+    html, body { overflow: visible; height: auto; background: white; margin: 0; }
+    .deck { height: auto; width: 100%; }
+    .slide { display: flex !important; position: relative; page-break-after: always; page-break-inside: avoid; width: 13.333in; height: 7.5in; min-height: 0; padding: 0.5in 0.7in; overflow: hidden; }
+    .slide.cover.active, .slide.cover { flex-direction: row; }
+    .nav, .dots-nav, .fullscreen-btn { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ============================ SLIDE 0 — AGENDA ============================ -->
+<section class="slide active" data-slide="0">
+  <div class="slide-body" style="padding:0; display:grid; grid-template-columns:42% 58%; height:100%;">
+    <!-- Left: magenta brand panel -->
+    <div style="background:linear-gradient(160deg, var(--magenta) 0%, #B0005C 100%); color:var(--white); padding:80px 56px; display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden;">
+      <div style="display:inline-flex; align-items:center; gap:14px; margin-bottom:36px;">
+        <div style="background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.3); border-radius:6px; padding:10px 18px; font-family:var(--mono); font-size:14px; letter-spacing:0.16em; text-transform:uppercase; font-weight:700;">Block 3 <span style="opacity:0.6;">von 4</span></div>
+        <div style="flex:1; height:2px; background:linear-gradient(90deg, rgba(255,255,255,0.4), rgba(255,255,255,0));"></div>
+      </div>
+      <div style="font-size:64px; font-family:'TeleNeoWeb', var(--font); font-weight:800; line-height:1.05; letter-spacing:-0.02em;">Prozess<br><span style="font-weight:300; font-style:italic; font-size:60px;">&amp; Lage</span></div>
+      <p style="margin-top:32px; font-size:17px; line-height:1.7; color:rgba(255,255,255,0.92); max-width:34ch;">
+        Block 2 zeigte: Wir liegen 2025 sehr hoch. Jetzt die Steuerungsfrage &mdash; wie verbessern wir den Prozess intern, und wie argumentieren wir gegen&uuml;ber der BNetzA?
+      </p>
+      <div style="position:absolute; bottom:-30px; right:-20px; font-family:'TeleNeoWeb', var(--font); font-style:italic; font-size:260px; font-weight:800; color:rgba(255,255,255,0.08); line-height:1;">03</div>
+    </div>
+    <!-- Right: agenda items -->
+    <div style="padding:80px 72px; display:flex; flex-direction:column; justify-content:center; gap:0; background:var(--white);">
+      <div style="font-family:var(--mono); font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:var(--magenta); font-weight:700; margin-bottom:48px; padding-bottom:16px; border-bottom:3px solid var(--magenta); display:inline-block; align-self:flex-start;">Inhalt dieses Blocks</div>
+
+      <div style="display:grid; grid-template-columns:64px 1fr; gap:0 24px; align-items:baseline; padding:28px 0; border-bottom:1px solid rgba(0,0,0,0.08);">
+        <span style="font-family:'TeleNeoWeb', var(--font); font-style:italic; font-size:52px; color:var(--magenta); line-height:1; text-align:right; font-weight:300;">1</span>
+        <div>
+          <strong style="font-size:22px; font-family:'TeleNeoWeb', var(--font); font-weight:800; color:var(--ink); display:block;">Zwei Hebel &mdash; ein Ziel</strong>
+          <p style="font-size:16px; color:var(--gray-50); margin-top:6px; line-height:1.5;">Extern BNetzA-Annahmen challengen und intern den Prozess automatisieren &mdash; beide verst&auml;rken sich</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:64px 1fr; gap:0 24px; align-items:baseline; padding:28px 0; border-bottom:1px solid rgba(0,0,0,0.08);">
+        <span style="font-family:'TeleNeoWeb', var(--font); font-style:italic; font-size:52px; color:var(--magenta); line-height:1; text-align:right; font-weight:300;">2</span>
+        <div>
+          <strong style="font-size:22px; font-family:'TeleNeoWeb', var(--font); font-weight:800; color:var(--ink); display:block;">Regulatorische Ans&auml;tze</strong>
+          <p style="font-size:16px; color:var(--gray-50); margin-top:6px; line-height:1.5;">Wettbewerbspreise, Verweildauer, Zusatzkosten &mdash; drei Ans&auml;tze mit direktem Headroom-Effekt</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:64px 1fr; gap:0 24px; align-items:baseline; padding:28px 0; border-bottom:1px solid rgba(0,0,0,0.08);">
+        <span style="font-family:'TeleNeoWeb', var(--font); font-style:italic; font-size:52px; color:var(--magenta); line-height:1; text-align:right; font-weight:300;">3</span>
+        <div>
+          <strong style="font-size:22px; font-family:'TeleNeoWeb', var(--font); font-weight:800; color:var(--ink); display:block;">Interner Prozess</strong>
+          <p style="font-size:16px; color:var(--gray-50); margin-top:6px; line-height:1.5;">Von manueller Rekonstruktion zur vorausschauenden ODE-Datenpipeline</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:64px 1fr; gap:0 24px; align-items:baseline; padding:28px 0;">
+        <span style="font-family:'TeleNeoWeb', var(--font); font-style:italic; font-size:52px; color:var(--magenta); line-height:1; text-align:right; font-weight:300;">4</span>
+        <div>
+          <strong style="font-size:22px; font-family:'TeleNeoWeb', var(--font); font-weight:800; color:var(--ink); display:block;">Synthese &amp; &Uuml;berleitung</strong>
+          <p style="font-size:16px; color:var(--gray-50); margin-top:6px; line-height:1.5;">Was wir mitnehmen und warum bessere Daten der zentrale Hebel sind</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 1 — ZWEI HEBEL FRAMING ============================ -->
+<section class="slide" data-slide="1">
+  <div class="slide-body center">
+    <div class="eyebrow">Prozess &amp; Lage &middot; Der Steuerungsrahmen</div>
+    <h2 class="title tight">Zwei Hebel, die sich <em>gegenseitig verst&auml;rken</em></h2>
+
+    <div class="two-col" style="gap:28px; align-items:stretch; margin-top:40px;">
+      <div class="card blue" style="display:flex; flex-direction:column;">
+        <div class="card-label" style="color:var(--blue);">Hebel 1 &middot; Gegen&uuml;ber der BNetzA</div>
+        <h3 style="font-size:26px; margin-bottom:14px;">BNetzA-Methodik challengen</h3>
+        <p style="font-size:16px; margin-bottom:18px;">Die PKS-Restriktion basiert auf Annahmen, die der Markt widerlegt. Mit <strong>Wettbewerbspreisen, Churn-Daten und verursachungsgerechter Kostenzuordnung</strong> l&auml;sst sich der Headroom gezielt erh&ouml;hen.</p>
+        <div style="margin-top:auto; font-family:var(--mono); font-size:14px; color:var(--blue); font-weight:600; letter-spacing:0.04em;">&rarr; Direkter Effekt auf den Headroom</div>
+      </div>
+      <div class="card accent" style="display:flex; flex-direction:column;">
+        <div class="card-label">Hebel 2 &middot; Intern</div>
+        <h3 style="font-size:26px; margin-bottom:14px;">Den Prozess automatisieren</h3>
+        <p style="font-size:16px; margin-bottom:18px;">Heute basiert die PKS-Bewertung auf manueller Aufbereitung und Einzelfall-Excel. K&uuml;nftig: ein wiederholbarer, datengetriebener Prozess auf Basis von <strong>ODE</strong> als zentraler Datenquelle.</p>
+        <div style="margin-top:auto; font-family:var(--mono); font-size:14px; color:var(--magenta); font-weight:600; letter-spacing:0.04em;">&rarr; Pr&uuml;ffähige Faktenbasis + agile Marktreaktion</div>
+      </div>
+    </div>
+
+    <div class="context-strip" style="margin-top:28px; background:var(--magenta-tint); border-color:var(--magenta);">
+      <div class="ctx-icon" style="color:var(--magenta);">Die Verbindung</div>
+      <p>Die regulatorischen Argumente wirken nur mit pr&uuml;ffähigen Nachweisen. Der automatisierte Prozess liefert sie &mdash; <strong>und macht aus Einzelfall-Challenges eine systematische Steuerung</strong>.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 2 — VIER REGULATORISCHE HEBEL ============================ -->
+<section class="slide dense" data-slide="2">
+  <div class="slide-body">
+    <div class="eyebrow">Extern &middot; Gegen&uuml;ber der BNetzA</div>
+    <h2 class="title tight">Vier Ans&auml;tze, die BNetzA-Annahmen zu <em>challengen</em></h2>
+    <p class="lede" style="font-size:16px; max-width:none; margin-bottom:16px;">
+      Jeder Ansatz st&uuml;tzt sich auf <strong>belegbare Marktdaten oder eine Aussage der BNetzA selbst</strong> &mdash; das macht die Argumentation belastbar statt spekulativ.
+    </p>
+
+    <!-- 3-col grid with subgrid for aligned rows -->
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); grid-template-rows:auto 1fr auto auto; gap:0 18px; flex:1; min-height:0;">
+
+      <!-- Card 1: Wettbewerb Pricing -->
+      <div class="card" style="display:grid; grid-row:1 / -1; grid-template-rows:subgrid; padding:24px 26px; row-gap:0; border-left:4px solid var(--gray-70);">
+        <div style="margin-bottom:14px;"><span style="font-family:var(--font); font-style:italic; font-size:36px; color:var(--gray-70); line-height:1; vertical-align:baseline; margin-right:10px;">1</span><span style="font-size:18px; font-weight:700; color:var(--ink);">Wettbewerbs&shy;preise widerlegen die PKS</span></div>
+        <ul style="list-style:none; margin:0; padding:0; font-size:14px; line-height:1.7; color:var(--gray-90); align-self:start;">
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--gray-70); font-weight:700; margin-right:6px;">&bull;</span>1&amp;1, Vodafone, O2 nutzen <strong>DT-TAL</strong> &mdash; identische Vorleistungskosten</li>
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--gray-70); font-weight:700; margin-right:6px;">&bull;</span>Preisen bis zu <strong>10&thinsp;&euro; unter Telekom</strong> &mdash; dauerhaft profitabel</li>
+          <li style="padding-left:16px; text-indent:-16px;"><span style="color:var(--gray-70); font-weight:700; margin-right:6px;">&bull;</span>PKS-Test misst eine Squeeze-Gefahr, <strong>die im Markt nicht existiert</strong></li>
+        </ul>
+        <div style="font-family:var(--mono); font-size:12px; color:var(--gray-70); font-weight:600; padding:14px 0;">&rarr; Deep-Dive n&auml;chste Folie</div>
+        <div style="border-left:3px solid var(--gray-70); background:var(--gray-05); padding:10px 12px;">
+          <div style="font-family:var(--mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray-70); font-weight:600; margin-bottom:4px;">Marktbeweis</div>
+          <p style="font-size:12.5px; font-style:italic; color:var(--gray-90); line-height:1.4;">Wer dauerhaft unter dem regulierten Preis profitabel anbietet, wird durch die Vorleistung nicht gequetscht.</p>
+        </div>
+      </div>
+
+      <!-- Card 2: Kundenverweildauer -->
+      <div class="card success" style="display:grid; grid-row:1 / -1; grid-template-rows:subgrid; padding:24px 26px; row-gap:0;">
+        <div style="margin-bottom:14px;"><span style="font-family:var(--font); font-style:italic; font-size:36px; color:var(--success); line-height:1; vertical-align:baseline; margin-right:10px;">2</span><span style="font-size:18px; font-weight:700; color:var(--ink);">Kundenverweildauer &mdash; Erfolg absichern</span></div>
+        <ul style="list-style:none; margin:0; padding:0; font-size:14px; line-height:1.7; color:var(--gray-90); align-self:start;">
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--success); font-weight:700; margin-right:6px;">&check;</span>Bereits von 58 auf <strong>70,2&thinsp;Mo</strong> (Kupfer) und <strong>62,4&thinsp;Mo</strong> (Fiber) angehoben</li>
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--success); font-weight:700; margin-right:6px;">&rarr;</span>Einmalkosten auf mehr Monate verteilt &rarr; <strong>Kosten sinken</strong></li>
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--success); font-weight:700; margin-right:6px;">&rarr;</span>Mehr AGB-Monate in Berechnung &rarr; <strong>Erl&ouml;s steigt</strong></li>
+          <li style="padding-left:16px; text-indent:-16px;"><span style="color:var(--success); font-weight:700; margin-right:6px;">&bull;</span>Offene Frage: <strong>Ist datenbasiert noch mehr drin?</strong></li>
+        </ul>
+        <div style="font-family:var(--mono); font-size:12px; color:var(--success); font-weight:600; padding:14px 0;">&rarr; Deep-Dive auf Folie 4</div>
+        <div style="border-left:3px solid var(--success); background:#E3F2EC; padding:10px 12px;">
+          <div style="font-family:var(--mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--success); font-weight:600; margin-bottom:4px;">BNetzA &middot; BK3-19-001</div>
+          <p style="font-size:12.5px; font-style:italic; color:var(--gray-90); line-height:1.4;">&bdquo;Die von der Telekom vorgeschlagene Kundenverweildauer von 489 Monaten wurde abgelehnt, da die Herleitung nicht nachvollziehbar war.&ldquo;</p>
+        </div>
+      </div>
+
+      <!-- Card 3: S-Tarif Zusatzkosten -->
+      <div class="card" style="display:grid; grid-row:1 / -1; grid-template-rows:subgrid; padding:24px 26px; row-gap:0; border-left:4px solid var(--gray-70);">
+        <div style="margin-bottom:14px;"><span style="font-family:var(--font); font-style:italic; font-size:36px; color:var(--gray-70); line-height:1; vertical-align:baseline; margin-right:10px;">3</span><span style="font-size:18px; font-weight:700; color:var(--ink);">Druck vom S-Tarif nehmen</span></div>
+        <ul style="list-style:none; margin:0; padding:0; font-size:14px; line-height:1.7; color:var(--gray-90); align-self:start;">
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--gray-70); font-weight:700; margin-right:6px;">&bull;</span>Jeder Tarif verursacht Zusatzkosten (Provision, Service, Billing)</li>
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--gray-70); font-weight:700; margin-right:6px;">&bull;</span>Die BNetzA setzt diese pauschal mit <strong>6,20&thinsp;&euro;</strong> an &mdash; egal ob S oder XL</li>
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--gray-70); font-weight:700; margin-right:6px;">&bull;</span>Folge: Der g&uuml;nstige S tr&auml;gt relativ die h&ouml;chste Last (<strong>&gt;&thinsp;21&thinsp;%</strong> des Erl&ouml;ses)</li>
+          <li style="padding-left:16px; text-indent:-16px;"><span style="color:var(--gray-70); font-weight:700; margin-right:6px;">&bull;</span>2022 blieben nur <strong>0,97&thinsp;&euro; Marge</strong> &mdash; das darf nicht wieder passieren</li>
+        </ul>
+        <div style="font-family:var(--mono); font-size:12px; color:var(--gray-70); font-weight:600; padding:14px 0;">&rarr; Deep-Dive auf Folie 5</div>
+        <div style="border-left:3px solid var(--success); background:#E3F2EC; padding:10px 12px;">
+          <div style="font-family:var(--mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--success); font-weight:600; margin-bottom:4px;">BNetzA &middot; BK3-22-003</div>
+          <p style="font-size:12.5px; font-style:italic; color:var(--gray-90); line-height:1.4;">&bdquo;Die Zusatzkosten werden einheitlich angesetzt; eine produktscharfe Differenzierung lag nicht vor.&ldquo;</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hebel 4: Deregulierung -->
+    <div style="margin-top:16px; background:var(--white); border:1px solid var(--gray-15); border-left:4px solid var(--gray-70); padding:18px 24px; display:flex; align-items:center; gap:24px;">
+      <div style="display:flex; align-items:baseline; gap:10px; flex-shrink:0;">
+        <span style="font-family:var(--font); font-style:italic; font-size:36px; color:var(--gray-70); line-height:1;">4</span>
+        <div>
+          <h3 style="font-size:18px; font-weight:700; color:var(--ink); margin-bottom:2px;">Deregulierung</h3>
+          <span style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray-70); font-weight:700;">Langfristig</span>
+        </div>
+      </div>
+      <ul style="list-style:none; margin:0; padding:0; font-size:14px; line-height:1.7; color:var(--gray-90); flex:1;">
+        <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--gray-70); font-weight:700; margin-right:6px;">&bull;</span>In vielen Gebieten bauen Wettbewerber eigene Netze (Glasfaser, Kabel)</li>
+        <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--gray-70); font-weight:700; margin-right:6px;">&bull;</span>Dort ist TDG <strong>nicht mehr marktbeherrschend</strong></li>
+        <li style="padding-left:16px; text-indent:-16px;"><span style="color:var(--gray-70); font-weight:700; margin-right:6px;">&bull;</span>Wenn BNetzA das anerkennt &rarr; <strong>PKS-Pflicht entf&auml;llt komplett</strong></li>
+      </ul>
+      <div style="display:flex; align-items:center; gap:8px; padding:10px 14px; background:#E3F2EC; border:1px solid rgba(0,119,75,0.2); flex-shrink:0;">
+        <span style="color:var(--success); font-weight:700; font-size:14px;">&check;</span>
+        <p style="font-size:12.5px; line-height:1.4; color:var(--gray-90);"><strong style="color:var(--success);">Erste Erfolge:</strong> M&uuml;nchen, K&ouml;ln, Ingolstadt, Wolfsburg<br>BNetzA er&ouml;ffnet geografische Differenzierung<br>(Eckpunktepapier BK1-26-0001)</p>
+      </div>
+      <div style="flex-shrink:0; text-align:center; padding:8px 14px; border:1.5px solid var(--gray-70); background:var(--gray-05);">
+        <div style="font-family:var(--mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray-70); font-weight:700;">Horizont</div>
+        <div style="font-family:var(--font); font-style:italic; font-size:22px; color:var(--gray-70); line-height:1; margin-top:2px;">2027+</div>
+      </div>
+    </div>
+
+    <div class="source">Quelle: DT Investor Relations Tariff Tracker &middot; BNetzA BK3-22-003 / BK3-25-006 &middot; TDG Marktanalyse (Mai 2025)</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 3 — WETTBEWERBSPREISE ============================ -->
+<section class="slide dense" data-slide="3">
+  <div class="slide-body">
+    <div class="eyebrow">Ansatz 1 &middot; Marktkontext &middot; Wettbewerbspreise</div>
+    <h2 class="title tight">Der Wettbewerb preist deutlich unter <em>unserem Niveau</em> &mdash; auf unserer Infrastruktur</h2>
+
+    <!-- MAIN GRID -->
+    <div style="display:grid; grid-template-columns:1.15fr 0.85fr; gap:28px; flex:1; min-height:0; align-items:stretch; margin-top:12px;">
+
+      <!-- LEFT: Chart -->
+      <div style="background:var(--white); border:1.5px solid var(--gray-15); padding:28px 32px 22px; display:flex; flex-direction:column; position:relative;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px;">
+          <div>
+            <div id="chartTitle" style="font-size:18px; font-weight:700; color:var(--ink);">Durchschnittspreis &uuml;ber 60&thinsp;Monate</div>
+            <div id="chartSubtitle" style="font-family:var(--mono); font-size:13px; color:var(--gray-50); margin-top:4px;">&euro;/Monat brutto &middot; Double Play &middot; Stand Mai 2026</div>
+          </div>
+          <!-- Toggle -->
+          <div style="display:flex; background:var(--gray-05); border:1px solid var(--gray-15); border-radius:4px; overflow:hidden; flex-shrink:0;">
+            <button id="togAvg60" onclick="showChart('avg60')" style="font-family:var(--mono); font-size:12px; padding:6px 12px; border:none; cursor:pointer; font-weight:600; background:var(--ink); color:var(--white); letter-spacing:0.02em;">&#8960; 60 Mo</button>
+            <button id="togAgb" onclick="showChart('agb')" style="font-family:var(--mono); font-size:12px; padding:6px 12px; border:none; cursor:pointer; font-weight:600; background:transparent; color:var(--gray-70); letter-spacing:0.02em;">AGB-Preis</button>
+            <button id="togTime" onclick="showChart('time')" style="font-family:var(--mono); font-size:12px; padding:6px 12px; border:none; cursor:pointer; font-weight:600; background:transparent; color:var(--gray-70); letter-spacing:0.02em;">Zeitverlauf</button>
+          </div>
+        </div>
+
+        <!-- CHART: avg 60m (default, visible) -->
+        <div id="chartAvg60" style="flex:1; min-height:0; display:flex;">
+        <svg viewBox="0 0 720 380" style="width:100%; flex:1; min-height:0;" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Telekom T logo -->
+            <symbol id="tk-logo" viewBox="0 0 840 1000"><path d="M200,660H0V460h200V660z M0,0v340h60v-10c0-160,90-260,260-260h10v720c0,100-40,140-140,140h-30v70h520v-70h-30c-100,0-140-40-140-140V70h10c170,0,260,100,260,260v10h60V0H0z M640,660h200V460H640V660z" fill="#E20074"/></symbol>
+            <!-- Vodafone icon -->
+            <symbol id="vf-logo" viewBox="-.398 -4.59 378.918 388.633"><path d="m119.441 14.328c47.465-18.918 102.754-17.61 148.954 4.363-13.165-2-26.555-.492-39.586 1.711-35.391 6.684-69.024 23.336-95.313 48.075-25.207 24.777-42.871 57.652-47.86 92.824-3.3 24.922-.241 51.062 10.942 73.746 11.524 23.8 31.809 43.32 56.258 53.394 23.559 9.97 50.887 9.86 74.75.961 35.805-13.14 61.531-48.62 64.473-86.527 1.851-24.844-4.192-51.273-20.883-70.328-15.934-18.652-39.238-28.926-62.559-34.774-1.25-23 9.586-45.722 26.77-60.68 9.543-8.605 21.386-14.09 33.633-17.6l.93-.321c35.058 16.812 64.847 44.539 83.827 78.578 16.262 28.98 24.743 62.375 23.903 95.64-.16 43.016-16.239 85.606-43.801 118.497-26.063 31.367-62.516 53.93-102.246 62.965-39.836 9.191-82.695 5.226-119.977-11.704-36.48-16.293-67.386-44.617-87.047-79.457-16.355-28.953-25.007-62.336-24.289-95.64.078-41.496 14.813-82.672 40.54-115.121 20.55-25.91 47.812-46.512 78.581-58.602z" fill="#e60000"/><path d="m228.809 20.402c13.03-2.203 26.421-3.71 39.586-1.71l1.89.32-1.265.48c-12.247 3.512-24.09 8.996-33.633 17.602-17.184 14.957-28.02 37.68-26.77 60.68 23.32 5.847 46.625 16.12 62.559 34.773 16.691 19.055 22.734 45.484 20.883 70.328-2.942 37.906-28.668 73.387-64.473 86.527-23.863 8.899-51.191 9.008-74.75-.96-24.45-10.075-44.734-29.594-56.258-53.395-11.183-22.684-14.242-48.824-10.941-73.746 4.988-35.172 22.652-68.047 47.86-92.824 26.288-24.739 59.921-41.391 95.312-48.075z" fill="#fff"/></symbol>
+            <!-- 1&1 logo -->
+            <symbol id="oneone-logo" viewBox="0 0 401 401"><path fill="#fff" d="M.4.9h400v400H.4z"/><path d="M9.8 10.2h381.3v381.3H9.8V10.2zm265.8 122v-29.1h65.2v181.1h-35.7v-152h-29.5zm-31.2 58c1.7 20-1.1 30.8-3.4 36.2l-28.2-38.3c29.6-20.8 36.9-54.8 13-76.5-19.8-14-40.1-14-61 0-21 19.3-19.6 42.6 4.2 69.8-40.7 25-44.1 52.9-26.5 82.4 18.8 27.8 60.7 34.3 97.1 10.5l7.1 9.7H285l-24.4-31.1c10.1-10 15.9-31.9 13.9-62.6h-30.1v-.1zm-55.9 15.5c-19.5 13-25.6 26.8-16 42 10.9 12.2 28.3 11.8 47.5 0l-31.5-42zm5.8-42l-8-11.8c-5.7-11.9-2.5-21.9 9.7-21.9 13.2.7 17.5 9.5 8.8 23.5l-10.5 10.2zM45.1 132.3v-29.1h65.2v181.1H74.6v-152H45.1z" fill-rule="evenodd" clip-rule="evenodd" fill="#003d8f"/></symbol>
+            <!-- O2 logo -->
+            <symbol id="o2-logo" viewBox="0 0 500 480"><path d="m 152.2 425.5c0 88.2 64 161.3 157.1 161.3 92.5 0 156.6-73.1 156.6-161.3 0-93.7-62.9-161.3-156.6-161.3-94.2 0-157.1 67.7-157.1 161.3m60.5 0c0-58.6 35.7-115.4 96.6-115.4 60.5 0 96.1 56.8 96.1 115.4 0 55-29.6 115.4-96.1 115.4-67.1 0-96.6-60.4-96.6-115.4" style="fill:#04256c;fill-rule:evenodd" transform="translate(-140,-260)"/><path d="m 550.8 647.2v-21.5h-55.7c22.3-21.9 51.4-48.5 51.4-77.4 0-26.8-16.8-39.9-42.8-39.9-13.9 0-28.1 3.5-40.5 9.8l2.2 22.7c8.9-5.9 20-11 31.5-11 11.1 0 22.3 5.9 22.3 18.4 0 25-46.3 63.7-59 76.1v22.9h90.7" style="fill:#04256c" transform="translate(-140,-260)"/></symbol>
+          </defs>
+
+          <!-- Y-axis: 30 at y=310, 58 at y=30. Scale: (val-30)*10 = height from bottom -->
+          <!-- Gridlines -->
+          <g stroke="var(--gray-15)" stroke-width="1">
+            <line x1="40" y1="310" x2="620" y2="310"/><!-- 30 EUR -->
+            <line x1="40" y1="210" x2="620" y2="210"/><!-- 40 EUR -->
+            <line x1="40" y1="110" x2="620" y2="110"/><!-- 50 EUR -->
+          </g>
+          <g font-family="JetBrains Mono, monospace" font-size="11" fill="var(--gray-30)" text-anchor="end">
+            <text x="36" y="314">30</text>
+            <text x="36" y="214">40</text>
+            <text x="36" y="114">50</text>
+            <text x="36" y="34">58 &euro;</text>
+          </g>
+
+          <!-- GROUP 1: DSL 50 — center ~130, bars at x=62,102,142,182 (w=36, gap=4) -->
+          <text x="122" y="345" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-size="14" font-weight="700" fill="var(--ink)">DSL 50</text>
+          <!-- TK 46.12: h=(46.12-30)*10=161.2, y=310-161.2=148.8 -->
+          <rect x="62" y="148.8" width="28" height="161.2" rx="2" fill="#E20074"/>
+          <text x="80" y="142" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#E20074">46,12</text>
+          <!-- VF 41.21: h=112.1, y=197.9 -->
+          <rect x="102" y="197.9" width="28" height="112.1" rx="2" fill="#E60000"/>
+          <text x="120" y="192" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#E60000">41,21</text>
+          <!-- 1&1 40.81: h=108.1, y=201.9 -->
+          <rect x="142" y="201.9" width="28" height="108.1" rx="2" fill="#003D8F"/>
+          <text x="160" y="196" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#003D8F">40,81</text>
+          <!-- O2 36.15: h=61.5, y=248.5 -->
+          <rect x="182" y="248.5" width="28" height="61.5" rx="2" fill="#04256C"/>
+          <text x="200" y="243" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#04256C">36,15</text>
+
+          <!-- Delta DSL 50: vertical arrow from cheapest to TK level, label on top -->
+          <line x1="225" y1="248.5" x2="235" y2="248.5" stroke="var(--danger)" stroke-width="2"/>
+          <line x1="230" y1="248.5" x2="230" y2="153" stroke="var(--danger)" stroke-width="2"/>
+          <polygon points="225,156 230,146 235,156" fill="var(--danger)"/>
+          <line x1="225" y1="148.8" x2="235" y2="148.8" stroke="var(--danger)" stroke-width="2"/>
+          <rect x="194" y="125" width="72" height="20" rx="3" fill="var(--white)" stroke="var(--danger)" stroke-width="1.5"/>
+          <text x="230" y="139" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="var(--danger)">9,97 &euro;</text>
+
+          <!-- GROUP 2: DSL 100 — center ~330, bars at x=262,302,342,382 -->
+          <text x="322" y="345" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-size="14" font-weight="700" fill="var(--ink)">DSL 100</text>
+          <!-- TK 48.37: h=183.7, y=126.3 -->
+          <rect x="262" y="126.3" width="28" height="183.7" rx="2" fill="#E20074"/>
+          <text x="280" y="120" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#E20074">48,37</text>
+          <!-- VF 45.46: h=154.6, y=155.4 -->
+          <rect x="302" y="155.4" width="28" height="154.6" rx="2" fill="#E60000"/>
+          <text x="320" y="149" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#E60000">45,46</text>
+          <!-- O2 41.15: h=111.5, y=198.5 -->
+          <rect x="342" y="198.5" width="28" height="111.5" rx="2" fill="#04256C"/>
+          <text x="360" y="193" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#04256C">41,15</text>
+          <!-- 1&1 40.81: h=108.1, y=201.9 -->
+          <rect x="382" y="201.9" width="28" height="108.1" rx="2" fill="#003D8F"/>
+          <text x="400" y="196" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#003D8F">40,81</text>
+
+          <!-- Delta DSL 100: vertical arrow from cheapest to TK level, label on top -->
+          <line x1="425" y1="201.9" x2="435" y2="201.9" stroke="var(--danger)" stroke-width="2"/>
+          <line x1="430" y1="201.9" x2="430" y2="131" stroke="var(--danger)" stroke-width="2"/>
+          <polygon points="425,134 430,124 435,134" fill="var(--danger)"/>
+          <line x1="425" y1="126.3" x2="435" y2="126.3" stroke="var(--danger)" stroke-width="2"/>
+          <rect x="394" y="103" width="72" height="20" rx="3" fill="var(--white)" stroke="var(--danger)" stroke-width="1.5"/>
+          <text x="430" y="117" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="var(--danger)">7,56 &euro;</text>
+
+          <!-- GROUP 3: DSL 250 — center ~530, bars at x=462,502,542,582 -->
+          <text x="522" y="345" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-size="14" font-weight="700" fill="var(--ink)">DSL 250</text>
+          <!-- TK 55.02: h=250.2, y=59.8 -->
+          <rect x="462" y="59.8" width="28" height="250.2" rx="2" fill="#E20074"/>
+          <text x="480" y="53" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#E20074">55,02</text>
+          <!-- VF 50.31: h=203.1, y=106.9 -->
+          <rect x="502" y="106.9" width="28" height="203.1" rx="2" fill="#E60000"/>
+          <text x="520" y="101" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#E60000">50,31</text>
+          <!-- O2 46.15: h=161.5, y=148.5 -->
+          <rect x="542" y="148.5" width="28" height="161.5" rx="2" fill="#04256C"/>
+          <text x="560" y="143" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#04256C">46,15</text>
+          <!-- 1&1 44.98: h=149.8, y=160.2 -->
+          <rect x="582" y="160.2" width="28" height="149.8" rx="2" fill="#003D8F"/>
+          <text x="600" y="155" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#003D8F">44,98</text>
+
+          <!-- Delta DSL 250: vertical arrow from cheapest to TK level, label on top -->
+          <line x1="625" y1="160.2" x2="635" y2="160.2" stroke="var(--danger)" stroke-width="2"/>
+          <line x1="630" y1="160.2" x2="630" y2="64" stroke="var(--danger)" stroke-width="2"/>
+          <polygon points="625,67 630,57 635,67" fill="var(--danger)"/>
+          <line x1="625" y1="59.8" x2="635" y2="59.8" stroke="var(--danger)" stroke-width="2"/>
+          <rect x="591" y="36" width="78" height="20" rx="3" fill="var(--white)" stroke="var(--danger)" stroke-width="1.5"/>
+          <text x="630" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="var(--danger)">10,04 &euro;</text>
+
+          <!-- LOGOS row below bars (y=355..380) — 1:1 aspect -->
+          <!-- Group 1 logos -->
+          <use href="#tk-logo" x="69" y="353" width="22" height="22"/>
+          <use href="#vf-logo" x="109" y="353" width="22" height="22"/>
+          <use href="#oneone-logo" x="149" y="353" width="22" height="22"/>
+          <use href="#o2-logo" x="189" y="353" width="22" height="22"/>
+          <!-- Group 2 logos -->
+          <use href="#tk-logo" x="269" y="353" width="22" height="22"/>
+          <use href="#vf-logo" x="309" y="353" width="22" height="22"/>
+          <use href="#o2-logo" x="349" y="353" width="22" height="22"/>
+          <use href="#oneone-logo" x="389" y="353" width="22" height="22"/>
+          <!-- Group 3 logos -->
+          <use href="#tk-logo" x="469" y="353" width="22" height="22"/>
+          <use href="#vf-logo" x="509" y="353" width="22" height="22"/>
+          <use href="#o2-logo" x="549" y="353" width="22" height="22"/>
+          <use href="#oneone-logo" x="589" y="353" width="22" height="22"/>
+        </svg>
+        </div>
+
+        <!-- CHART: AGB price (hidden by default) -->
+        <div id="chartAgb" style="flex:1; min-height:0; display:none;">
+        <svg viewBox="0 0 720 380" style="width:100%; height:100%;" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <symbol id="tk-logo2" viewBox="0 0 840 1000"><path d="M200,660H0V460h200V660z M0,0v340h60v-10c0-160,90-260,260-260h10v720c0,100-40,140-140,140h-30v70h520v-70h-30c-100,0-140-40-140-140V70h10c170,0,260,100,260,260v10h60V0H0z M640,660h200V460H640V660z" fill="#E20074"/></symbol>
+            <symbol id="vf-logo2" viewBox="-.398 -4.59 378.918 388.633"><path d="m119.441 14.328c47.465-18.918 102.754-17.61 148.954 4.363-13.165-2-26.555-.492-39.586 1.711-35.391 6.684-69.024 23.336-95.313 48.075-25.207 24.777-42.871 57.652-47.86 92.824-3.3 24.922-.241 51.062 10.942 73.746 11.524 23.8 31.809 43.32 56.258 53.394 23.559 9.97 50.887 9.86 74.75.961 35.805-13.14 61.531-48.62 64.473-86.527 1.851-24.844-4.192-51.273-20.883-70.328-15.934-18.652-39.238-28.926-62.559-34.774-1.25-23 9.586-45.722 26.77-60.68 9.543-8.605 21.386-14.09 33.633-17.6l.93-.321c35.058 16.812 64.847 44.539 83.827 78.578 16.262 28.98 24.743 62.375 23.903 95.64-.16 43.016-16.239 85.606-43.801 118.497-26.063 31.367-62.516 53.93-102.246 62.965-39.836 9.191-82.695 5.226-119.977-11.704-36.48-16.293-67.386-44.617-87.047-79.457-16.355-28.953-25.007-62.336-24.289-95.64.078-41.496 14.813-82.672 40.54-115.121 20.55-25.91 47.812-46.512 78.581-58.602z" fill="#e60000"/><path d="m228.809 20.402c13.03-2.203 26.421-3.71 39.586-1.71l1.89.32-1.265.48c-12.247 3.512-24.09 8.996-33.633 17.602-17.184 14.957-28.02 37.68-26.77 60.68 23.32 5.847 46.625 16.12 62.559 34.773 16.691 19.055 22.734 45.484 20.883 70.328-2.942 37.906-28.668 73.387-64.473 86.527-23.863 8.899-51.191 9.008-74.75-.96-24.45-10.075-44.734-29.594-56.258-53.395-11.183-22.684-14.242-48.824-10.941-73.746 4.988-35.172 22.652-68.047 47.86-92.824 26.288-24.739 59.921-41.391 95.312-48.075z" fill="#fff"/></symbol>
+            <symbol id="oneone-logo2" viewBox="0 0 401 401"><path fill="#fff" d="M.4.9h400v400H.4z"/><path d="M9.8 10.2h381.3v381.3H9.8V10.2zm265.8 122v-29.1h65.2v181.1h-35.7v-152h-29.5zm-31.2 58c1.7 20-1.1 30.8-3.4 36.2l-28.2-38.3c29.6-20.8 36.9-54.8 13-76.5-19.8-14-40.1-14-61 0-21 19.3-19.6 42.6 4.2 69.8-40.7 25-44.1 52.9-26.5 82.4 18.8 27.8 60.7 34.3 97.1 10.5l7.1 9.7H285l-24.4-31.1c10.1-10 15.9-31.9 13.9-62.6h-30.1v-.1zm-55.9 15.5c-19.5 13-25.6 26.8-16 42 10.9 12.2 28.3 11.8 47.5 0l-31.5-42zm5.8-42l-8-11.8c-5.7-11.9-2.5-21.9 9.7-21.9 13.2.7 17.5 9.5 8.8 23.5l-10.5 10.2zM45.1 132.3v-29.1h65.2v181.1H74.6v-152H45.1z" fill-rule="evenodd" clip-rule="evenodd" fill="#003d8f"/></symbol>
+            <symbol id="o2-logo2" viewBox="0 0 500 480"><path d="m 152.2 425.5c0 88.2 64 161.3 157.1 161.3 92.5 0 156.6-73.1 156.6-161.3 0-93.7-62.9-161.3-156.6-161.3-94.2 0-157.1 67.7-157.1 161.3m60.5 0c0-58.6 35.7-115.4 96.6-115.4 60.5 0 96.1 56.8 96.1 115.4 0 55-29.6 115.4-96.1 115.4-67.1 0-96.6-60.4-96.6-115.4" style="fill:#04256c;fill-rule:evenodd" transform="translate(-140,-260)"/><path d="m 550.8 647.2v-21.5h-55.7c22.3-21.9 51.4-48.5 51.4-77.4 0-26.8-16.8-39.9-42.8-39.9-13.9 0-28.1 3.5-40.5 9.8l2.2 22.7c8.9-5.9 20-11 31.5-11 11.1 0 22.3 5.9 22.3 18.4 0 25-46.3 63.7-59 76.1v22.9h90.7" style="fill:#04256c" transform="translate(-140,-260)"/></symbol>
+          </defs>
+
+          <!-- Y-axis: 35 at y=310, 65 at y=10. Scale: (val-35)*10 = height from bottom -->
+          <g stroke="var(--gray-15)" stroke-width="1">
+            <line x1="40" y1="310" x2="620" y2="310"/>
+            <line x1="40" y1="210" x2="620" y2="210"/>
+            <line x1="40" y1="110" x2="620" y2="110"/>
+          </g>
+          <g font-family="JetBrains Mono, monospace" font-size="11" fill="var(--gray-30)" text-anchor="end">
+            <text x="36" y="314">35</text>
+            <text x="36" y="214">45</text>
+            <text x="36" y="114">55</text>
+            <text x="36" y="14">65 &euro;</text>
+          </g>
+
+          <!-- GROUP 1: DSL 50 — AGB prices: TK 51.90, VF 42.98, 1&1 44.98, O2 39.98 -->
+          <!-- Scale: (val-35)*10 -->
+          <text x="122" y="345" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-size="14" font-weight="700" fill="var(--ink)">DSL 50</text>
+          <!-- TK 51.90: h=169, y=141 -->
+          <rect x="62" y="141" width="28" height="169" rx="2" fill="#E20074"/>
+          <text x="76" y="135" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#E20074">51,90</text>
+          <!-- VF 42.98: h=79.8, y=230.2 -->
+          <rect x="102" y="230.2" width="28" height="79.8" rx="2" fill="#E60000"/>
+          <text x="116" y="224" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#E60000">42,98</text>
+          <!-- 1&1 44.98: h=99.8, y=210.2 -->
+          <rect x="142" y="210.2" width="28" height="99.8" rx="2" fill="#003D8F"/>
+          <text x="156" y="204" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#003D8F">44,98</text>
+          <!-- O2 39.98: h=49.8, y=260.2 -->
+          <rect x="182" y="260.2" width="28" height="49.8" rx="2" fill="#04256C"/>
+          <text x="196" y="254" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#04256C">39,98</text>
+          <!-- Delta: TK(141) to O2(260.2) = 11.92 EUR -->
+          <line x1="221" y1="260.2" x2="231" y2="260.2" stroke="var(--danger)" stroke-width="2"/>
+          <line x1="226" y1="260.2" x2="226" y2="147" stroke="var(--danger)" stroke-width="2"/>
+          <polygon points="221,150 226,140 231,150" fill="var(--danger)"/>
+          <line x1="221" y1="141" x2="231" y2="141" stroke="var(--danger)" stroke-width="2"/>
+          <rect x="190" y="119" width="72" height="20" rx="3" fill="var(--white)" stroke="var(--danger)" stroke-width="1.5"/>
+          <text x="226" y="133" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="var(--danger)">11,92 &euro;</text>
+
+          <!-- GROUP 2: DSL 100 — AGB: TK 56.90, VF 47.98, 1&1 44.98, O2 44.98 -->
+          <text x="322" y="345" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-size="14" font-weight="700" fill="var(--ink)">DSL 100</text>
+          <!-- TK 56.90: h=219, y=91 -->
+          <rect x="262" y="91" width="28" height="219" rx="2" fill="#E20074"/>
+          <text x="276" y="85" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#E20074">56,90</text>
+          <!-- VF 47.98: h=129.8, y=180.2 -->
+          <rect x="302" y="180.2" width="28" height="129.8" rx="2" fill="#E60000"/>
+          <text x="316" y="174" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#E60000">47,98</text>
+          <!-- O2 44.98: h=99.8, y=210.2 -->
+          <rect x="342" y="210.2" width="28" height="99.8" rx="2" fill="#04256C"/>
+          <text x="356" y="204" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#04256C">44,98</text>
+          <!-- 1&1 44.98: h=99.8, y=210.2 -->
+          <rect x="382" y="210.2" width="28" height="99.8" rx="2" fill="#003D8F"/>
+          <text x="396" y="204" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#003D8F">44,98</text>
+          <!-- Delta: TK(91) to 1&1/O2(210.2) = 11.92 EUR -->
+          <line x1="421" y1="210.2" x2="431" y2="210.2" stroke="var(--danger)" stroke-width="2"/>
+          <line x1="426" y1="210.2" x2="426" y2="97" stroke="var(--danger)" stroke-width="2"/>
+          <polygon points="421,100 426,90 431,100" fill="var(--danger)"/>
+          <line x1="421" y1="91" x2="431" y2="91" stroke="var(--danger)" stroke-width="2"/>
+          <rect x="390" y="69" width="72" height="20" rx="3" fill="var(--white)" stroke="var(--danger)" stroke-width="1.5"/>
+          <text x="426" y="83" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="var(--danger)">11,92 &euro;</text>
+
+          <!-- GROUP 3: DSL 250 — AGB: TK 63.90, VF 53.98, 1&1 49.98, O2 49.98 -->
+          <text x="522" y="345" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-size="14" font-weight="700" fill="var(--ink)">DSL 250</text>
+          <!-- TK 63.90: h=289, y=21 -->
+          <rect x="462" y="21" width="28" height="289" rx="2" fill="#E20074"/>
+          <text x="476" y="15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#E20074">63,90</text>
+          <!-- VF 53.98: h=189.8, y=120.2 -->
+          <rect x="502" y="120.2" width="28" height="189.8" rx="2" fill="#E60000"/>
+          <text x="516" y="114" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#E60000">53,98</text>
+          <!-- O2 49.98: h=149.8, y=160.2 -->
+          <rect x="542" y="160.2" width="28" height="149.8" rx="2" fill="#04256C"/>
+          <text x="556" y="154" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#04256C">49,98</text>
+          <!-- 1&1 49.98: h=149.8, y=160.2 -->
+          <rect x="582" y="160.2" width="28" height="149.8" rx="2" fill="#003D8F"/>
+          <text x="596" y="154" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#003D8F">49,98</text>
+          <!-- Delta: TK(21) to 1&1(160.2) = 13.92 EUR -->
+          <line x1="621" y1="160.2" x2="631" y2="160.2" stroke="var(--danger)" stroke-width="2"/>
+          <line x1="626" y1="160.2" x2="626" y2="27" stroke="var(--danger)" stroke-width="2"/>
+          <polygon points="621,30 626,20 631,30" fill="var(--danger)"/>
+          <line x1="621" y1="21" x2="631" y2="21" stroke="var(--danger)" stroke-width="2"/>
+          <rect x="590" y="1" width="78" height="20" rx="3" fill="var(--white)" stroke="var(--danger)" stroke-width="1.5"/>
+          <text x="629" y="15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="var(--danger)">13,92 &euro;</text>
+
+          <!-- Logos -->
+          <use href="#tk-logo2" x="65" y="353" width="22" height="22"/>
+          <use href="#vf-logo2" x="105" y="353" width="22" height="22"/>
+          <use href="#oneone-logo2" x="145" y="353" width="22" height="22"/>
+          <use href="#o2-logo2" x="185" y="353" width="22" height="22"/>
+          <use href="#tk-logo2" x="265" y="353" width="22" height="22"/>
+          <use href="#vf-logo2" x="305" y="353" width="22" height="22"/>
+          <use href="#o2-logo2" x="345" y="353" width="22" height="22"/>
+          <use href="#oneone-logo2" x="385" y="353" width="22" height="22"/>
+          <use href="#tk-logo2" x="465" y="353" width="22" height="22"/>
+          <use href="#vf-logo2" x="505" y="353" width="22" height="22"/>
+          <use href="#o2-logo2" x="545" y="353" width="22" height="22"/>
+          <use href="#oneone-logo2" x="585" y="353" width="22" height="22"/>
+        </svg>
+        </div>
+
+        <!-- CHART: Time series DSL 100 (hidden by default) -->
+        <div id="chartTime" style="flex:1; min-height:0; display:none; flex-direction:column;">
+          <div style="display:flex; align-items:center; gap:14px; margin-bottom:10px;">
+            <span style="font-family:var(--mono); font-size:14px; font-weight:700; letter-spacing:0.06em; color:var(--ink); background:var(--gray-05); border:1.5px solid var(--gray-15); padding:5px 12px;">DSL 100 &middot; &Oslash; 60&thinsp;Mo Preis</span>
+            <span style="font-size:13px; font-style:italic; color:var(--gray-70);">Gleiche Basis: beide Linien inkl. aller Promotions &amp; Rabatte</span>
+          </div>
+          <svg viewBox="0 0 760 300" style="width:100%; flex:1; min-height:0;" xmlns="http://www.w3.org/2000/svg">
+            <!-- Gridlines. Scale: y=260 is 40 EUR, y=10 is 52 EUR => 250px for 12 EUR => 20.83px/EUR -->
+            <g stroke="var(--gray-15)" stroke-width="1">
+              <line x1="50" y1="260" x2="670" y2="260"/>
+              <line x1="50" y1="176.7" x2="670" y2="176.7"/>
+              <line x1="50" y1="93.3" x2="670" y2="93.3"/>
+              <line x1="50" y1="10" x2="670" y2="10"/>
+            </g>
+            <g font-family="JetBrains Mono, monospace" font-size="11" fill="var(--gray-30)" text-anchor="end">
+              <text x="44" y="264">40</text>
+              <text x="44" y="181">44</text>
+              <text x="44" y="97">48</text>
+              <text x="44" y="14">52 &euro;</text>
+            </g>
+
+            <!-- Competitor line (continuous, no gap) -->
+            <!-- 24 points: x = 50 + i*(620/23) = 50 + i*26.96. y = 260 - (val-40)*20.83 -->
+            <!-- vals: 42.03,42.03,41.76,41.76,42.01,43.17,43.17,42.90,42.90,42.90,42.45,42.53,43.20,43.20,42.37,42.31,42.31,42.72,42.73,42.73,43.14,43.14,43.14,42.47 -->
+            <path d="M50,217.7 L77,217.7 L104,223.3 L131,223.3 L158,218.2 L185,194.0 L212,194.0 L239,199.6 L266,199.6 L293,199.6 L320,209.0 L347,207.3 L374,193.4 L401,193.4 L428,210.7 L455,211.9 L482,211.9 L509,203.3 L536,203.1 L563,203.1 L590,194.5 L617,194.5 L644,194.5 L670,207.4" fill="none" stroke="var(--gray-50)" stroke-width="2.5"/>
+            <!-- Area fill -->
+            <path d="M50,217.7 L77,217.7 L104,223.3 L131,223.3 L158,218.2 L185,194.0 L212,194.0 L239,199.6 L266,199.6 L293,199.6 L320,209.0 L347,207.3 L374,193.4 L401,193.4 L428,210.7 L455,211.9 L482,211.9 L509,203.3 L536,203.1 L563,203.1 L590,194.5 L617,194.5 L644,194.5 L670,207.4 L670,260 L50,260 Z" fill="#F5F5F3" opacity="0.5"/>
+
+            <!-- Telekom line (continuous) -->
+            <!-- vals: 50.43,50.43,50.43,49.27,49.27,49.27,49.27,49.27,49.27,47.60,48.76,49.93,48.77,50.17,49.67,49.67,50.62,50.62,51.62,51.62,51.62,48.28,48.28,48.37 -->
+            <path d="M50,42.7 L77,42.7 L104,42.7 L131,66.8 L158,66.8 L185,66.8 L212,66.8 L239,66.8 L266,66.8 L293,101.6 L320,77.4 L347,53.1 L374,77.9 L401,48.3 L428,58.7 L455,58.7 L482,38.9 L509,38.9 L536,18.1 L563,18.1 L590,18.1 L617,87.5 L644,87.5 L670,85.6" fill="none" stroke="#E20074" stroke-width="3"/>
+
+            <!-- End dots -->
+            <circle cx="670" cy="207.4" r="5" fill="var(--gray-50)"/>
+            <circle cx="670" cy="85.6" r="5" fill="#E20074"/>
+
+            <!-- End labels -->
+            <text x="678" y="89" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#E20074">48,37 &euro;</text>
+            <text x="678" y="212" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="var(--gray-50)">42,47 &euro;</text>
+
+            <!-- Labels on lines -->
+            <text x="60" y="34" font-family="TeleNeoWeb, sans-serif" font-size="13" font-weight="700" fill="#E20074">Telekom &mdash; teuerster Anbieter</text>
+            <text x="60" y="240" font-family="TeleNeoWeb, sans-serif" font-size="13" font-weight="700" fill="var(--gray-50)">Wettbewerber-&Oslash; &mdash; unterbieten uns durchgehend</text>
+
+            <!-- X-axis labels -->
+            <g font-family="JetBrains Mono, monospace" font-size="11" fill="var(--gray-50)" text-anchor="middle">
+              <text x="50" y="278">Jun 23</text>
+              <text x="185" y="278">Nov 23</text>
+              <text x="320" y="278">Mai 24</text>
+              <text x="455" y="278">Sep 25</text>
+              <text x="590" y="278">Feb 26</text>
+              <text x="670" y="278">Mai 26</text>
+            </g>
+
+            <!-- Delta annotation -->
+            <rect x="290" y="120" width="110" height="40" rx="4" fill="var(--white)" stroke="var(--danger)" stroke-width="1.5"/>
+            <text x="345" y="137" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--danger)">Abstand</text>
+            <text x="345" y="153" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700" fill="var(--danger)">5&ndash;8 &euro; / Mo</text>
+          </svg>
+        </div>
+
+        <!-- Legend with actual logos -->
+        <div style="display:flex; gap:20px; margin-top:10px; padding-top:10px; border-top:1px solid var(--gray-15); font-family:var(--mono); font-size:12px; color:var(--gray-70); align-items:center; flex-wrap:wrap;">
+          <span style="display:inline-flex; align-items:center; gap:5px;"><svg width="16" height="16" viewBox="0 0 840 1000"><path d="M200,660H0V460h200V660z M0,0v340h60v-10c0-160,90-260,260-260h10v720c0,100-40,140-140,140h-30v70h520v-70h-30c-100,0-140-40-140-140V70h10c170,0,260,100,260,260v10h60V0H0z M640,660h200V460H640V660z" fill="#E20074"/></svg><strong style="color:#E20074;">Telekom</strong></span>
+          <span style="display:inline-flex; align-items:center; gap:5px;"><svg width="16" height="16" viewBox="-.398 -4.59 378.918 388.633"><path d="m119.441 14.328c47.465-18.918 102.754-17.61 148.954 4.363-13.165-2-26.555-.492-39.586 1.711-35.391 6.684-69.024 23.336-95.313 48.075-25.207 24.777-42.871 57.652-47.86 92.824-3.3 24.922-.241 51.062 10.942 73.746 11.524 23.8 31.809 43.32 56.258 53.394 23.559 9.97 50.887 9.86 74.75.961 35.805-13.14 61.531-48.62 64.473-86.527 1.851-24.844-4.192-51.273-20.883-70.328-15.934-18.652-39.238-28.926-62.559-34.774-1.25-23 9.586-45.722 26.77-60.68 9.543-8.605 21.386-14.09 33.633-17.6l.93-.321c35.058 16.812 64.847 44.539 83.827 78.578 16.262 28.98 24.743 62.375 23.903 95.64-.16 43.016-16.239 85.606-43.801 118.497-26.063 31.367-62.516 53.93-102.246 62.965-39.836 9.191-82.695 5.226-119.977-11.704-36.48-16.293-67.386-44.617-87.047-79.457-16.355-28.953-25.007-62.336-24.289-95.64.078-41.496 14.813-82.672 40.54-115.121 20.55-25.91 47.812-46.512 78.581-58.602z" fill="#e60000"/><path d="m228.809 20.402c13.03-2.203 26.421-3.71 39.586-1.71l1.89.32-1.265.48c-12.247 3.512-24.09 8.996-33.633 17.602-17.184 14.957-28.02 37.68-26.77 60.68 23.32 5.847 46.625 16.12 62.559 34.773 16.691 19.055 22.734 45.484 20.883 70.328-2.942 37.906-28.668 73.387-64.473 86.527-23.863 8.899-51.191 9.008-74.75-.96-24.45-10.075-44.734-29.594-56.258-53.395-11.183-22.684-14.242-48.824-10.941-73.746 4.988-35.172 22.652-68.047 47.86-92.824 26.288-24.739 59.921-41.391 95.312-48.075z" fill="#fff"/></svg>Vodafone</span>
+          <span style="display:inline-flex; align-items:center; gap:5px;"><svg width="16" height="16" viewBox="0 0 401 401"><path fill="#fff" d="M.4.9h400v400H.4z"/><path d="M9.8 10.2h381.3v381.3H9.8V10.2zm265.8 122v-29.1h65.2v181.1h-35.7v-152h-29.5zm-31.2 58c1.7 20-1.1 30.8-3.4 36.2l-28.2-38.3c29.6-20.8 36.9-54.8 13-76.5-19.8-14-40.1-14-61 0-21 19.3-19.6 42.6 4.2 69.8-40.7 25-44.1 52.9-26.5 82.4 18.8 27.8 60.7 34.3 97.1 10.5l7.1 9.7H285l-24.4-31.1c10.1-10 15.9-31.9 13.9-62.6h-30.1v-.1zm-55.9 15.5c-19.5 13-25.6 26.8-16 42 10.9 12.2 28.3 11.8 47.5 0l-31.5-42zm5.8-42l-8-11.8c-5.7-11.9-2.5-21.9 9.7-21.9 13.2.7 17.5 9.5 8.8 23.5l-10.5 10.2zM45.1 132.3v-29.1h65.2v181.1H74.6v-152H45.1z" fill-rule="evenodd" clip-rule="evenodd" fill="#003d8f"/></svg>1&amp;1</span>
+          <span style="display:inline-flex; align-items:center; gap:5px;"><svg width="16" height="16" viewBox="0 0 500 480"><path d="m 152.2 425.5c0 88.2 64 161.3 157.1 161.3 92.5 0 156.6-73.1 156.6-161.3 0-93.7-62.9-161.3-156.6-161.3-94.2 0-157.1 67.7-157.1 161.3m60.5 0c0-58.6 35.7-115.4 96.6-115.4 60.5 0 96.1 56.8 96.1 115.4 0 55-29.6 115.4-96.1 115.4-67.1 0-96.6-60.4-96.6-115.4" style="fill:#04256c;fill-rule:evenodd" transform="translate(-140,-260)"/><path d="m 550.8 647.2v-21.5h-55.7c22.3-21.9 51.4-48.5 51.4-77.4 0-26.8-16.8-39.9-42.8-39.9-13.9 0-28.1 3.5-40.5 9.8l2.2 22.7c8.9-5.9 20-11 31.5-11 11.1 0 22.3 5.9 22.3 18.4 0 25-46.3 63.7-59 76.1v22.9h90.7" style="fill:#04256c" transform="translate(-140,-260)"/></svg>O2</span>
+          <span style="color:var(--gray-50); font-size:11px; margin-left:auto;">Alle auf DT-TAL</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: Argumentation -->
+      <div style="display:flex; flex-direction:column; gap:0; height:100%;">
+
+        <!-- Header: Die Schere ist verkehrt herum -->
+        <div style="background:var(--ink); padding:28px 30px 24px; color:var(--white);">
+          <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; font-weight:700; color:var(--magenta); margin-bottom:12px;">These</div>
+          <div style="font-family:var(--font); font-size:26px; font-weight:700; line-height:1.1; letter-spacing:-0.02em;">Der Markt widerlegt die PKS <em style="font-style:italic; color:var(--magenta);">eindeutig</em></div>
+          <p style="font-size:15px; line-height:1.55; color:rgba(255,255,255,0.85); margin-top:14px;">Die PKS unterstellt, der Incumbent dr&uuml;cke den Endkundenpreis, um Reseller auszuquetschen. Die Realit&auml;t ist das Gegenteil: <strong style="color:var(--white);">Wir sind Preisf&uuml;hrer nach oben</strong>, die Wettbewerber sind die Angreifer.</p>
+        </div>
+
+        <!-- Prominent statement -->
+        <div style="background:var(--magenta); padding:18px 30px;">
+          <p style="font-family:var(--font); font-size:18px; font-weight:700; color:var(--white); line-height:1.3; letter-spacing:-0.01em;">Der Test misst eine Gefahr, die im Markt nicht existiert.</p>
+        </div>
+
+        <!-- Wirkungskette: TEST → MARKT → SCHLUSSFOLGERUNG -->
+        <div style="border:1.5px solid var(--ink); border-top:none; flex:1; display:grid; grid-template-columns:1fr; grid-template-rows:1fr auto 1fr auto 1fr; align-items:stretch;">
+
+          <!-- Step 1: TEST -->
+          <div style="padding:14px 26px; display:flex; gap:14px; align-items:center;">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:4px; flex-shrink:0;">
+              <div style="width:22px; height:22px; background:var(--gray-50); border-radius:50%; display:flex; align-items:center; justify-content:center;"><span style="font-family:var(--mono); font-size:10px; font-weight:700; color:var(--white);">1</span></div>
+              
+            </div>
+            <div>
+              <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray-50); font-weight:700; margin-bottom:3px;"><img src="https://www.emtex.de/wp-content/uploads/2018/11/bnetza__.png" alt="BNetzA" style="width:80px; height:auto;"/></div>
+              <p style="font-size:15px; line-height:1.4; color:var(--ink);">BNetzA testet: Kann ein Wettbewerber auf DT-Vorleistungen den Endkundenpreis <strong>nachbilden</strong>?</p>
+            </div>
+          </div>
+
+          <!-- Arrow 1→2 -->
+          <div style="display:flex; align-items:center; justify-content:center; height:20px;"><svg width="14" height="20" viewBox="0 0 14 20"><path d="M7 0v16M2 12l5 6 5-6" stroke="var(--magenta)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+          <!-- Step 2: MARKT -->
+          <div style="padding:14px 26px; display:flex; gap:14px; align-items:center; background:var(--magenta-tint); border-top:2px solid var(--magenta); border-bottom:2px solid var(--magenta);">
+            <div style="width:22px; height:22px; background:var(--magenta); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><span style="font-family:var(--mono); font-size:10px; font-weight:700; color:var(--white);">2</span></div>
+            <div>
+              <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--magenta); font-weight:700; margin-bottom:3px;">Markt</div>
+              <p style="font-size:15px; line-height:1.4; color:var(--ink);">Sie tun mehr als nachbilden &mdash; sie <strong>unterbieten uns um bis zu 10,04&thinsp;&euro;</strong>, auf unserer eigenen TAL.</p>
+            </div>
+          </div>
+
+          <!-- Arrow 2→3 -->
+          <div style="display:flex; align-items:center; justify-content:center; height:20px;"><svg width="14" height="20" viewBox="0 0 14 20"><path d="M7 0v16M2 12l5 6 5-6" stroke="var(--magenta)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+          <!-- Step 3: SCHLUSSFOLGERUNG -->
+          <div style="padding:14px 26px; display:flex; gap:14px; align-items:center;">
+            <div style="width:22px; height:22px; background:var(--success); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><span style="font-family:var(--mono); font-size:10px; font-weight:700; color:var(--white);">3</span></div>
+            <div>
+              <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--success); font-weight:700; margin-bottom:3px;">Schlussfolgerung</div>
+              <p style="font-size:15px; line-height:1.4; color:var(--ink);">Wer dauerhaft unter dem regulierten Preis <strong>profitabel</strong> anbietet, wird durch die Vorleistung nicht gequetscht.</p>
+              <p style="font-size:17px; line-height:1.25; color:var(--magenta); font-weight:700; margin-top:6px;">Die PKS-Restriktion ist gegenstandslos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="source">Quelle: DT Investor Relations &mdash; Tariff Tracker &middot; Durchschnittspreis &uuml;ber 60&thinsp;Mo &middot; Double-Play-Tarife &middot; Brutto inkl. MwSt.</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 4 — DEEP DIVE CHURN BENCHMARK ============================ -->
+<section class="slide dense" data-slide="4">
+  <div class="slide-body">
+    <div class="eyebrow">Ansatz 2 &middot; Deep-Dive Kundenverweildauer</div>
+    <h2 class="title tight">Verweildauer: Erfolg erzielt &mdash; <em>geht noch mehr?</em></h2>
+
+    <!-- Success banner -->
+    <div style="display:flex; align-items:stretch; gap:0; margin-top:6px;">
+      <div style="background:var(--success); color:var(--white); padding:12px 20px; display:flex; align-items:center; gap:10px; flex-shrink:0;">
+        <span style="font-size:18px; font-weight:700;">&check;</span>
+        <div>
+          <div style="font-family:var(--mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; opacity:0.8;">Bereits erreicht &middot; BK3-25-006</div>
+          <div style="font-size:20px; font-weight:700; letter-spacing:-0.01em;">58 &rarr; 70,2&thinsp;Mo <span style="opacity:0.7; font-size:14px; font-weight:400;">Kupfer</span> &nbsp; 58 &rarr; 62,4&thinsp;Mo <span style="opacity:0.7; font-size:14px; font-weight:400;">Fiber</span></div>
+        </div>
+      </div>
+      <div style="background:var(--white); border:1.5px solid var(--success); border-left:none; padding:12px 20px; display:flex; align-items:center; flex:1;">
+        <p style="font-size:14px; line-height:1.5; color:var(--gray-90);">Anhebung im aktuellen Verfahren durchgesetzt. Verteilt Einmalkosten auf mehr Monate <strong>und</strong> erh&ouml;ht den durchschnittlichen Erl&ouml;s &mdash; doppelter Hebel auf die PKS-Marge.</p>
+      </div>
+    </div>
+
+    <!-- HORIZONTAL FLOW: 4 steps left-to-right, using subgrid for aligned rows -->
+    <div style="display:grid; grid-template-columns:1fr auto 1fr auto 1fr auto 1fr; grid-template-rows:auto 1fr auto 1fr auto; gap:0; margin-top:16px; align-items:stretch; flex:1; min-height:0;">
+
+      <!-- STEP 1: Die Methode -->
+      <div style="background:var(--white); border:1.5px solid var(--blue); border-top:4px solid var(--blue); padding:16px 16px; display:flex; flex-direction:column; grid-row:1/-1;">
+        <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--blue); font-weight:700; margin-bottom:8px;">1 &middot; Die Methode</div>
+
+        <!-- Current BNetzA method -->
+        <div style="background:var(--gray-05); border:1px solid var(--gray-15); padding:10px 12px; margin-bottom:10px;">
+          <div style="font-family:var(--mono); font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--gray-50); font-weight:700; margin-bottom:4px;">Heute &middot; BNetzA</div>
+          <p style="font-size:13px; line-height:1.4; color:var(--gray-70);"><strong style="color:var(--ink);">Marktabfrage-Median:</strong> Verweildauern bei WB erheben, Median bilden &rarr; <strong style="color:var(--ink);">58,71&thinsp;Mo</strong></p>
+        </div>
+
+        <!-- Alternative: 1/Churn -->
+        <div style="background:rgba(31,111,178,0.06); border:1.5px solid var(--blue); padding:10px 12px; flex:1;">
+          <div style="font-family:var(--mono); font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--blue); font-weight:700; margin-bottom:4px;">Alternativ &middot; 1/Churn</div>
+          <div style="font-family:var(--mono); font-size:17px; font-weight:700; color:var(--blue); line-height:1.2; margin-bottom:6px;">Verweildauer = 1 / Churn</div>
+          <p style="font-size:13px; line-height:1.4; color:var(--gray-70);">Aus <strong style="color:var(--ink);">beobachtbarer K&uuml;ndigungsquote</strong> direkt ableiten. Kausal, transparent, pr&uuml;ffähig.</p>
+          <div style="margin-top:10px; padding-top:8px; border-top:1px solid rgba(31,111,178,0.2);">
+            <div style="font-family:var(--mono); font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--blue); font-weight:700; margin-bottom:6px;">EU-weit anerkannte Methodik</div>
+            <table style="width:100%; border-collapse:collapse; font-size:12px;">
+              <tr style="border-bottom:1px solid var(--gray-15);"><td style="padding:5px 0; color:var(--ink); font-weight:600;">Luxemburg</td><td style="padding:5px 0; color:var(--gray-50);">POST Lux.</td><td style="padding:5px 0; text-align:right; color:var(--blue); font-weight:700;">ILR</td></tr>
+              <tr style="border-bottom:1px solid var(--gray-15);"><td style="padding:5px 0; color:var(--ink); font-weight:600;">Spanien</td><td style="padding:5px 0; color:var(--gray-50);">Telef&oacute;nica</td><td style="padding:5px 0; text-align:right; color:var(--blue); font-weight:700;">CNMC</td></tr>
+              <tr style="border-bottom:1px solid var(--gray-15);"><td style="padding:5px 0; color:var(--ink); font-weight:600;">UK</td><td style="padding:5px 0; color:var(--gray-50);">BT/Openreach</td><td style="padding:5px 0; text-align:right; color:var(--blue); font-weight:700;">Ofcom</td></tr>
+              <tr><td style="padding:5px 0; color:var(--ink); font-weight:600;">EU</td><td style="padding:5px 0; color:var(--gray-50);"></td><td style="padding:5px 0; text-align:right; color:var(--blue); font-weight:700;">BEREC</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div style="display:flex; align-items:center; justify-content:center; padding:0 6px; grid-row:1/-1;">
+        <span style="font-family:var(--font); font-style:italic; font-size:24px; color:var(--magenta);">&rarr;</span>
+      </div>
+
+      <!-- STEP 2: BNetzA-Annahme -->
+      <div style="background:var(--white); border:1.5px solid var(--gray-15); border-top:4px solid var(--gray-70); padding:18px 18px; display:grid; grid-row:1/-1; grid-template-rows:subgrid; row-gap:0;">
+        <div>
+          <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gray-70); font-weight:700; margin-bottom:8px;">2 &middot; BNetzA-Annahme</div>
+          <p style="font-size:13px; line-height:1.5; color:var(--gray-70);">Welche Churn-Rate ist <strong style="color:var(--ink);">implizit enthalten</strong>?</p>
+        </div>
+        <!-- Kupfer -->
+        <div style="background:var(--gray-05); padding:14px 16px; border:1.5px solid var(--gray-15); display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-size:13px; color:var(--ink); font-weight:700; margin-bottom:6px;">Kupfer &middot; 70,2&thinsp;Mo</div>
+          <div style="font-family:var(--mono); font-size:26px; font-weight:700; color:var(--ink);">1,42&thinsp;%<span style="font-size:13px; font-weight:400; color:var(--gray-50);"> /Mo</span></div>
+          <div style="font-family:var(--mono); font-size:12px; color:var(--gray-50); margin-top:4px;">= 1 / 70,2 Monate</div>
+        </div>
+        <!-- spacer -->
+        <div style="height:8px;"></div>
+        <!-- Fiber -->
+        <div style="background:var(--white); padding:14px 16px; border:1.5px solid var(--ink); border-left:4px solid var(--ink); display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-size:13px; color:var(--ink); font-weight:700; margin-bottom:6px;">Fiber &middot; 62,4&thinsp;Mo</div>
+          <div style="font-family:var(--mono); font-size:26px; font-weight:700; color:var(--ink);">1,60&thinsp;%<span style="font-size:13px; font-weight:400; color:var(--gray-50);"> /Mo</span></div>
+          <div style="font-family:var(--mono); font-size:12px; color:var(--gray-50); margin-top:4px;">= 1 / 62,4 Monate</div>
+        </div>
+        <!-- Footer -->
+        <div style="padding-top:10px;">
+          <p style="font-size:12px; color:var(--gray-50);">BNetzA nutzt eigenen Ansatz &mdash; nicht 1/Churn.</p>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div style="display:flex; align-items:center; justify-content:center; padding:0 6px; grid-row:1/-1;">
+        <span style="font-family:var(--font); font-style:italic; font-size:24px; color:var(--magenta);">&rarr;</span>
+      </div>
+
+      <!-- STEP 3: Unsere Realität -->
+      <div style="background:#F0FBF5; border:1.5px solid var(--success); border-top:4px solid var(--success); padding:18px 18px; display:grid; grid-row:1/-1; grid-template-rows:subgrid; row-gap:0;">
+        <div>
+          <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--success); font-weight:700; margin-bottom:8px;">3 &middot; DT Consumer real</div>
+          <p style="font-size:13px; line-height:1.5; color:var(--gray-70);">Tats&auml;chlich <strong style="color:var(--ink);">beobachteter Churn</strong> (April 2026):</p>
+        </div>
+        <!-- Kupfer -->
+        <div style="background:var(--white); padding:14px 16px; border:1.5px solid var(--success); display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-size:13px; color:var(--success); font-weight:700; margin-bottom:6px;">Kupfer</div>
+          <div style="font-family:var(--mono); font-size:26px; font-weight:700; color:var(--success);">0,91&thinsp;%<span style="font-size:13px; font-weight:400; color:var(--gray-50);"> /Mo</span></div>
+          <div style="font-size:13px; color:var(--success); font-weight:600; margin-top:6px;">36&thinsp;% niedriger als BNetzA</div>
+        </div>
+        <!-- spacer -->
+        <div style="height:8px;"></div>
+        <!-- Fiber -->
+        <div style="background:var(--white); padding:14px 16px; border:1.5px solid var(--ink); border-left:4px solid var(--ink); display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-size:13px; color:var(--ink); font-weight:700; margin-bottom:6px;">Fiber</div>
+          <div style="font-family:var(--mono); font-size:26px; font-weight:700; color:var(--ink);">tbd</div>
+          <div style="font-size:13px; color:var(--gray-70); margin-top:6px;">Validierung ausstehend</div>
+        </div>
+        <!-- Footer -->
+        <div style="padding-top:10px;">
+          <p style="font-size:12px; color:var(--success); font-weight:600;">Kunden bleiben <strong>deutlich l&auml;nger</strong> als unterstellt.</p>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div style="display:flex; align-items:center; justify-content:center; padding:0 6px; grid-row:1/-1;">
+        <span style="font-family:var(--font); font-style:italic; font-size:24px; color:var(--magenta);">&rarr;</span>
+      </div>
+
+      <!-- STEP 4: Ergebnis -->
+      <div style="background:var(--magenta-tint); border:1.5px solid var(--magenta); border-top:4px solid var(--magenta); padding:18px 18px; display:grid; grid-row:1/-1; grid-template-rows:subgrid; row-gap:0;">
+        <div>
+          <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--magenta); font-weight:700; margin-bottom:8px;">4 &middot; Ergebnis</div>
+          <p style="font-size:13px; line-height:1.5; color:var(--gray-70);">Anwendung von 1/Churn auf <strong style="color:var(--ink);">unsere realen Daten</strong>:</p>
+        </div>
+        <!-- Kupfer -->
+        <div style="background:var(--white); padding:14px 16px; border:2px solid var(--magenta); display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-size:13px; color:var(--magenta); font-weight:700; margin-bottom:4px;">Kupfer &middot; 1 / 0,0091</div>
+          <div style="font-family:var(--font); font-style:italic; font-size:34px; font-weight:700; color:var(--magenta); line-height:1;">~110&thinsp;Mo</div>
+          <div style="font-size:14px; color:var(--ink); margin-top:6px;">vs. anerkannt: <strong>70,2&thinsp;Mo</strong></div>
+          <div style="font-family:var(--mono); font-size:13px; font-weight:700; color:var(--magenta); margin-top:8px; padding-top:8px; border-top:1px solid rgba(226,0,116,0.2);">+40&thinsp;Mo belegbar</div>
+        </div>
+        <!-- spacer -->
+        <div style="height:8px;"></div>
+        <!-- Fiber -->
+        <div style="background:var(--white); padding:14px 16px; border:1.5px solid var(--ink); border-left:4px solid var(--ink); display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-size:13px; color:var(--ink); font-weight:700; margin-bottom:4px;">Fiber &middot; 1 / tbd</div>
+          <div style="font-family:var(--font); font-style:italic; font-size:28px; font-weight:700; color:var(--ink); line-height:1;">tbd</div>
+          <div style="font-size:14px; color:var(--gray-70); margin-top:6px;">vs. anerkannt: <strong>62,4&thinsp;Mo</strong></div>
+        </div>
+        <!-- Footer -->
+        <div style="padding-top:10px;">
+          <p style="font-size:12px; color:var(--magenta); font-weight:600;">Belastbare Daten &rarr; n&auml;chste Anh&ouml;rung.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: Risk card -->
+    <div style="margin-top:14px; border:1px solid var(--gray-15); border-left:4px solid var(--danger); padding:14px 22px; background:#FFF8F8; display:flex; align-items:center; gap:20px;">
+      <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--danger); font-weight:700; flex-shrink:0;">Risiko</div>
+      <p style="font-size:14px; line-height:1.5; color:var(--gray-90);">Die BNetzA k&ouml;nnte statt DT-Churn den <strong>h&ouml;heren Wettbewerbs-Churn</strong> ansetzen &mdash; Argument: ein effizienter Wettbewerber bindet Kunden k&uuml;rzer. <strong style="color:var(--danger);">Vorbild Ofcom:</strong> In UK nutzt der Regulierer ausschlie&szlig;lich Wettbewerberdaten, nicht die des SMP-Betreibers BT.</p>
+    </div>
+
+    <div class="source">Quelle: ILR, CNMC, Ofcom, BEREC ERT-Guidance &middot; DT-Churn intern (Apr 2026)</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 5 — ZUSATZKOSTEN S-TARIF ============================ -->
+<section class="slide dense" data-slide="5">
+  <div class="slide-body">
+    <div class="eyebrow">Ansatz 3 &middot; Deep-Dive Zusatzkosten</div>
+    <h2 class="title tight">Pauschale Zusatzkosten treffen den <em>S-Tarif</em> am h&auml;rtesten</h2>
+    <div style="display:grid; grid-template-columns:0.38fr 1fr; gap:32px; margin-top:8px; align-items:stretch;">
+
+      <!-- Left: BNetzA issue -->
+      <div style="border-left:4px solid var(--magenta); padding:24px 28px; background:var(--magenta-tint); display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-family:var(--mono); font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--magenta); font-weight:700; margin-bottom:18px;">BNetzA-Annahme</div>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:14px; margin:0; padding:0;">
+          <li style="display:flex; align-items:flex-start; gap:10px; font-size:15px; line-height:1.5; color:var(--ink);"><span style="color:var(--magenta); font-weight:700; font-size:18px; line-height:1.2; flex-shrink:0;">&bull;</span><span><strong>Einheitlicher Kostenblock</strong> &mdash; 6,20&thinsp;&euro;/Mo f&uuml;r alle Produkte, unabh&auml;ngig vom Erl&ouml;sniveau</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px; font-size:15px; line-height:1.5; color:var(--ink);"><span style="color:var(--magenta); font-weight:700; font-size:18px; line-height:1.2; flex-shrink:0;">&bull;</span><span><strong>&Uuml;berproportionale Belastung</strong> &mdash; erl&ouml;sschwache Tarife tragen relativ h&ouml;here Kosten als Premium-Produkte</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px; font-size:15px; line-height:1.5; color:var(--ink);"><span style="color:var(--magenta); font-weight:700; font-size:18px; line-height:1.2; flex-shrink:0;">&bull;</span><span><strong>Struktureller Druck auf S</strong> &mdash; engster PKS-Test, obwohl reale Akquise-/Servicekosten dort niedriger liegen</span></li>
+        </ul>
+        <div style="margin-top:auto; padding-top:18px; border-top:1px solid rgba(226,0,116,0.2);">
+          <div style="border-left:3px solid var(--success); background:#E3F2EC; padding:12px 14px;">
+            <div style="font-family:var(--mono); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--success); font-weight:600; margin-bottom:6px;">BNetzA &middot; BK3-22-003</div>
+            <p style="font-size:13px; font-style:italic; color:var(--gray-90); line-height:1.45;">&bdquo;Die Zusatzkosten werden einheitlich angesetzt; eine produktscharfe Differenzierung lag nicht vor.&ldquo;</p>
+          </div>
+          <div style="font-family:var(--mono); font-size:11px; color:var(--gray-50); margin-top:10px;"><strong style="color:var(--magenta);">6,20&thinsp;&euro;/Mo</strong> pauschal je Produkt</div>
+        </div>
+      </div>
+
+      <!-- Right: Chart -->
+    <div style="background:var(--white); border:1.5px solid var(--gray-15); padding:28px 36px;">
+      <div style="font-family:var(--mono); font-size:13px; letter-spacing:0.16em; text-transform:uppercase; color:var(--gray-50); font-weight:600; margin-bottom:6px;">Zusatzkostenblock 6,20 &euro; als Anteil des Erl&ouml;ses &middot; 2025 &middot; &euro;/Monat netto</div>
+      <!-- Legend on top -->
+      <div style="display:flex; gap:18px; margin-bottom:12px; font-family:var(--mono); font-size:12px; color:var(--gray-70); align-items:center; flex-wrap:wrap;">
+        <span style="display:inline-flex; align-items:center; gap:5px;"><span style="display:inline-block; width:14px; height:14px; background:#DADADA; border-radius:2px;"></span>Erl&ouml;s netto</span>
+        <span style="display:inline-flex; align-items:center; gap:5px;"><span style="display:inline-block; width:14px; height:14px; background:#E20074; border-radius:2px;"></span>Zusatzkosten 6,20&thinsp;&euro; (pauschal)</span>
+        <span style="display:inline-flex; align-items:center; gap:5px;"><span style="display:inline-block; width:14px; height:14px; background:#00774B; opacity:0.35; border-radius:2px;"></span>PKS 2022</span>
+        <span style="display:inline-flex; align-items:center; gap:5px;"><span style="display:inline-block; width:14px; height:14px; background:#00774B; border-radius:2px;"></span>PKS 2025</span>
+      </div>
+      <svg viewBox="0 0 900 300" style="width:100%; height:300px;" xmlns="http://www.w3.org/2000/svg">
+        <!-- baseline. Scale: 5.2px/EUR, base y=260 -->
+        <line x1="50" y1="260" x2="870" y2="260" stroke="var(--gray-15)"/>
+        <!-- gridlines -->
+        <g stroke="var(--gray-15)" stroke-width="1">
+          <line x1="50" y1="208" x2="870" y2="208"/>
+          <line x1="50" y1="156" x2="870" y2="156"/>
+          <line x1="50" y1="104" x2="870" y2="104"/>
+          <line x1="50" y1="52" x2="870" y2="52"/>
+        </g>
+
+        <!-- ===== S / ADSL ===== scale: 5.2px/EUR, base y=260 -->
+        <!-- Erloes: 28.59*5.2=148.7, y=111.3 -->
+        <rect x="72" y="111.3" width="50" height="148.7" fill="#DADADA"/>
+        <text x="97" y="103" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700" fill="var(--ink)">28,59 &euro;</text>
+        <!-- ZK: 6.20*5.2=32.2, y=227.8 -->
+        <rect x="126" y="227.8" width="50" height="32.2" fill="var(--magenta)"/>
+        <text x="151" y="221" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="var(--magenta)">6,20 &euro;</text>
+        <text x="151" y="249" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-weight="700" font-size="14" fill="var(--white)">21,7%</text>
+        <!-- PKS 2022: 0.97*5.2=5, y=255 -->
+        <rect x="180" y="255" width="50" height="5" fill="#D91308" opacity="0.4"/>
+        <text x="205" y="249" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="var(--danger)">0,97</text>
+        <!-- PKS 2025: 4.66*5.2=24.2, y=235.8 -->
+        <rect x="234" y="235.8" width="50" height="24.2" fill="var(--success)"/>
+        <text x="259" y="229" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="var(--success)">4,66</text>
+        <!-- Year labels -->
+        <text x="205" y="274" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--danger)">'22</text>
+        <text x="259" y="274" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--success)">'25</text>
+        <!-- Product label -->
+        <text x="152" y="292" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-size="15" font-weight="700" fill="var(--ink)">S / ADSL</text>
+
+        <!-- ===== M / VDSL 50 ===== -->
+        <!-- Erloes: 32.22*5.2=167.5, y=92.5 -->
+        <rect x="342" y="92.5" width="50" height="167.5" fill="#DADADA"/>
+        <text x="367" y="84" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700" fill="var(--ink)">32,22 &euro;</text>
+        <!-- ZK -->
+        <rect x="396" y="227.8" width="50" height="32.2" fill="var(--magenta)"/>
+        <text x="421" y="221" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="var(--magenta)">6,20 &euro;</text>
+        <text x="421" y="249" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-weight="700" font-size="14" fill="var(--white)">19,2%</text>
+        <!-- PKS 2022: 3.89*5.2=20.2, y=239.8 -->
+        <rect x="450" y="239.8" width="50" height="20.2" fill="var(--success)" opacity="0.4"/>
+        <text x="475" y="233" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="#005C3A">3,89</text>
+        <!-- PKS 2025: 8.36*5.2=43.5, y=216.5 -->
+        <rect x="504" y="216.5" width="50" height="43.5" fill="var(--success)"/>
+        <text x="529" y="210" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="var(--success)">8,36</text>
+        <!-- Year labels -->
+        <text x="475" y="274" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#005C3A">'22</text>
+        <text x="529" y="274" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--success)">'25</text>
+        <text x="422" y="292" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-size="15" font-weight="700" fill="var(--ink)">M / VDSL 50</text>
+
+        <!-- ===== Fiber Mix ===== -->
+        <!-- Erloes: 39.69*5.2=206.4, y=53.6 -->
+        <rect x="612" y="53.6" width="50" height="206.4" fill="#DADADA"/>
+        <text x="637" y="45" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="700" fill="var(--ink)">39,69 &euro;</text>
+        <!-- ZK -->
+        <rect x="666" y="227.8" width="50" height="32.2" fill="var(--magenta)"/>
+        <text x="691" y="221" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="var(--magenta)">6,20 &euro;</text>
+        <text x="691" y="249" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-weight="700" font-size="14" fill="var(--white)">15,6%</text>
+        <!-- PKS 2025: 5.37*5.2=27.9, y=232.1 -->
+        <rect x="720" y="232.1" width="50" height="27.9" fill="var(--success)"/>
+        <text x="745" y="225" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="700" fill="var(--success)">5,37</text>
+        <text x="745" y="274" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--success)">'25</text>
+        <text x="680" y="292" text-anchor="middle" font-family="TeleNeoWeb, sans-serif" font-size="15" font-weight="700" fill="var(--ink)">Fiber Mix</text>
+      </svg>
+      <p style="font-size:14px; color:var(--gray-70); line-height:1.5; margin-top:10px; text-align:center;">Der Zusatzkostenblock ist &uuml;berall <strong>gleich gro&szlig; (6,20 &euro;)</strong> &mdash; aber je kleiner der Erl&ouml;s, desto gr&ouml;&szlig;er sein Anteil: <strong style="color:var(--magenta);">21,7&thinsp;% bei S</strong> gegen&uuml;ber 15,6&thinsp;% bei Fiber.</p>
+    </div>
+
+    </div><!-- /grid -->
+
+    <div class="two-col" style="margin-top:20px; gap:32px;">
+      <div class="card danger">
+        <div class="card-label" style="color:var(--danger);">Das Problem</div>
+        <h3>Gleicher Block, ungleiche Last</h3>
+        <ul style="list-style:none; margin:10px 0 0; padding:0; font-size:14px; line-height:1.7; color:var(--gray-90);">
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--danger); font-weight:700; margin-right:6px;">&bull;</span>Beim S bindet der Block <strong>21,7&thinsp;%</strong> des Erl&ouml;ses &mdash; bei Fiber nur 15,6&thinsp;%</li>
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--danger); font-weight:700; margin-right:6px;">&bull;</span>Der S-Tarif hat damit den geringsten Spielraum im PKS-Test</li>
+          <li style="padding-left:16px; text-indent:-16px;"><span style="color:var(--danger); font-weight:700; margin-right:6px;">&bull;</span>Reale Kosten rechtfertigen diese Gleichverteilung nicht</li>
+        </ul>
+      </div>
+      <div class="card success">
+        <div class="card-label" style="color:var(--success);">Der Ansatz</div>
+        <h3>Kosten verursachungsgerecht zuordnen</h3>
+        <ul style="list-style:none; margin:10px 0 0; padding:0; font-size:14px; line-height:1.7; color:var(--gray-90);">
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--success); font-weight:700; margin-right:6px;">&bull;</span>Kosten je Produkt nachweisen statt pauschal verteilen</li>
+          <li style="padding-left:16px; text-indent:-16px; margin-bottom:5px;"><span style="color:var(--success); font-weight:700; margin-right:6px;">&bull;</span>M, L und Fiber haben <strong>ausreichend Headroom</strong> &mdash; k&ouml;nnen mehr tragen</li>
+          <li style="padding-left:16px; text-indent:-16px;"><span style="color:var(--success); font-weight:700; margin-right:6px;">&bull;</span>Entlastet den S-Tarif gezielt, ohne andere Produkte zu gef&auml;hrden</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="source">Quelle: BNetzA BK3-22-003 / BK3-25-006 (Zusatzkosten 6,20 &euro;) &middot; Erl&ouml;se 2025 netto &middot; illustrative Darstellung</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 6 — SECTION DIVIDER ============================ -->
+<section class="slide divider" data-slide="6">
+  <div style="max-width:1100px;">
+    <div class="div-kicker">Teil 2 &middot; Was wir intern tun</div>
+    <h2>PKS intern <em>steuern und simulieren</em> &mdash; bevor wir entscheiden.</h2>
+    <p class="div-lede">Heute fehlt die M&ouml;glichkeit, den PKS-Spielraum einer Tarif- oder Promo-Entscheidung <strong>vorab durchzurechnen</strong>. Das Zielbild: eine automatisierte Pipeline, die den Headroom vor jeder Aktion sichtbar macht.</p>
+    <div class="div-steps">
+      <span class="div-step">Extern &middot; BNetzA challengen</span>
+      <span class="div-step on">Intern &middot; Prozess &amp; Daten</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 7 — HEUTE → ZIELBILD (VON-ZU) ============================ -->
+<section class="slide dense" data-slide="7">
+  <div class="slide-body">
+    <div class="eyebrow">Intern &middot; Von heute zum Zielbild</div>
+    <h2 class="title tight">Von nachgelagerter Rekonstruktion zur <em>vorausschauenden Steuerung</em></h2>
+
+    <div style="display:grid; grid-template-columns:1fr 64px 1fr; gap:0; align-items:stretch; flex:1; min-height:0;">
+      <!-- HEUTE -->
+      <div style="border:1px solid var(--gray-15); border-left:4px solid var(--danger); background:var(--white); padding:28px 32px; display:flex; flex-direction:column; justify-content:center;">
+        <span style="font-family:var(--mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--danger); font-weight:700;">Heute &middot; Ist-Zustand</span>
+        <div style="font-family:var(--font); font-style:italic; font-size:23px; color:var(--ink); line-height:1.15; margin:6px 0 24px;">Rekonstruktion im Nachhinein</div>
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div style="display:flex; gap:16px; align-items:flex-start;">
+            <i class="ph ph-wave-sine" style="font-size:24px; color:var(--danger); margin-top:2px; flex-shrink:0;"></i>
+            <div><strong style="font-size:16.5px; color:var(--ink);">Heuristische Promotion-Zuordnung</strong><div style="font-size:15px; color:var(--gray-70); margin-top:4px; line-height:1.5;">Aufgrund fehlender Datenbasis werden Promotions (z.&thinsp;B. 3&times;9,95) manuell und gesch&auml;tzt zugeordnet.</div></div>
+          </div>
+          <div style="border-top:1px solid var(--gray-15);"></div>
+          <div style="display:flex; gap:16px; align-items:flex-start;">
+            <i class="ph ph-pencil-ruler" style="font-size:24px; color:var(--danger); margin-top:2px; flex-shrink:0;"></i>
+            <div><strong style="font-size:16.5px; color:var(--ink);">Manuelle Datenaufbereitung</strong><div style="font-size:15px; color:var(--gray-70); margin-top:4px; line-height:1.5;">Quellen aus Finance, Sales und Regulatorik werden in Einzel-Excel zusammengef&uuml;hrt &mdash; aufw&auml;ndig und fehleranf&auml;llig.</div></div>
+          </div>
+          <div style="border-top:1px solid var(--gray-15);"></div>
+          <div style="display:flex; gap:16px; align-items:flex-start;">
+            <i class="ph ph-chart-line-down" style="font-size:24px; color:var(--danger); margin-top:2px; flex-shrink:0;"></i>
+            <div><strong style="font-size:16.5px; color:var(--ink);">Kein PKS-Test vorab</strong><div style="font-size:15px; color:var(--gray-70); margin-top:4px; line-height:1.5;">Der verbleibende PKS-Spielraum einer Aktion l&auml;sst sich vor dem Launch nicht durchrechnen.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARROW -->
+      <div style="display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:var(--font); font-style:italic; font-size:48px; color:var(--magenta);">&rarr;</span>
+      </div>
+
+      <!-- ZIELBILD -->
+      <div style="border:1px solid var(--gray-15); border-left:4px solid var(--success); background:var(--white); padding:28px 32px; display:flex; flex-direction:column; justify-content:center;">
+        <span style="font-family:var(--mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--success); font-weight:700;">Zielbild &middot; Soll-Zustand</span>
+        <div style="font-family:var(--font); font-style:italic; font-size:23px; color:var(--ink); line-height:1.15; margin:6px 0 24px;">Steuerung vor der Entscheidung</div>
+
+        <!-- pipeline -->
+        <div style="display:flex; align-items:stretch; gap:8px; margin-bottom:24px;">
+          <div style="flex:1; text-align:center; border:1px solid var(--gray-15); border-top:3px solid var(--magenta); padding:12px 6px;"><div style="font-family:var(--mono); font-size:10px; color:var(--gray-50); letter-spacing:0.06em;">01 QUELLE</div><div style="font-size:12.5px; font-weight:700; color:var(--ink); margin-top:4px;">ODE-Daten</div></div>
+          <span style="color:var(--magenta); font-style:italic; align-self:center;">&rarr;</span>
+          <div style="flex:1; text-align:center; border:1px solid var(--gray-15); border-top:3px solid var(--gray-30); padding:12px 6px;"><div style="font-family:var(--mono); font-size:10px; color:var(--gray-50); letter-spacing:0.06em;">02 MODELL</div><div style="font-size:12.5px; font-weight:700; color:var(--ink); margin-top:4px;">Datenmodell</div></div>
+          <span style="color:var(--magenta); font-style:italic; align-self:center;">&rarr;</span>
+          <div style="flex:1; text-align:center; border:1px solid var(--gray-15); border-top:3px solid var(--gray-30); padding:12px 6px;"><div style="font-family:var(--mono); font-size:10px; color:var(--gray-50); letter-spacing:0.06em;">03 ABGLEICH</div><div style="font-size:12.5px; font-weight:700; color:var(--ink); margin-top:4px;">Validierung</div></div>
+          <span style="color:var(--success); font-style:italic; align-self:center;">&rarr;</span>
+          <div style="flex:1; text-align:center; border:1px solid var(--success); border-top:3px solid var(--success); padding:12px 6px; background:#E3F2EC;"><div style="font-family:var(--mono); font-size:10px; color:var(--success); letter-spacing:0.06em;">04 ZIELBILD</div><div style="font-size:12.5px; font-weight:700; color:var(--ink); margin-top:4px;">Simulation</div></div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; gap:12px; align-items:flex-start;"><i class="ph ph-check-circle" style="font-size:20px; color:var(--success); flex:0 0 auto; margin-top:2px;"></i><div style="font-size:15px; color:var(--gray-90); line-height:1.5;"><strong style="color:var(--ink);">Automatische Promotion-Zuordnung:</strong> PKS-Tooling (TSC-Projekt) erm&ouml;glicht automatisierte Zuordnung von Promotions zu Abs&auml;tzen.</div></div>
+          <div style="border-top:1px solid var(--gray-15);"></div>
+          <div style="display:flex; gap:12px; align-items:flex-start;"><i class="ph ph-warning-circle" style="font-size:20px; color:#C47F00; flex:0 0 auto; margin-top:2px;"></i><div style="font-size:15px; color:var(--gray-90); line-height:1.5;"><strong style="color:var(--ink);">Fehlend: Cashback-, Kostendaten und Congstar auf ODE.</strong> Aktuell nicht in der zentralen Datenplattform verf&uuml;gbar &mdash; Voraussetzung f&uuml;r vollst&auml;ndigen PKS-Test.</div></div>
+          <div style="border-top:1px solid var(--gray-15);"></div>
+          <div style="display:flex; gap:12px; align-items:flex-start;"><i class="ph ph-hourglass-medium" style="font-size:20px; color:var(--gray-50); flex:0 0 auto; margin-top:2px;"></i><div style="font-size:15px; color:var(--gray-90); line-height:1.5;"><strong style="color:var(--ink);">Headroom-Simulation:</strong> Erst m&ouml;glich, wenn alle Daten verf&uuml;gbar. Dann: PK testet Promotions und Tarife gegen den PKS-Spielraum &mdash; vor der GPRA-Freigabe.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- consequence band -->
+    <div class="context-strip" style="margin-top:18px;">
+      <div class="ctx-icon">&rarr; Der Unterschied</div>
+      <p>Mit der heutigen Datenlage l&auml;sst sich die PKS <strong>intern nur grob steuern</strong> &mdash; der Spielraum wird erst nach der Entscheidung sichtbar. Das Zielbild wandelt die PKS von einer <strong>regulatorischen Nachweispflicht zu einem aktiven Pricing-Instrument</strong>: weniger regulatorisches Risiko, bessere Nutzung des Headrooms.</p>
+    </div>
+
+    <div class="source">Quelle: SharePoint &bdquo;PKS Automatisierung&ldquo; &middot; ODE, TDGSR, KPR, Cashback, Congstar &middot; interne Prozessaufnahme</div>
+  </div>
+</section>
+
+
+<!-- ============================ SLIDE 8 — PROTOTYPE SIMULATION ============================ -->
+<section class="slide dense" data-slide="8">
+  <div class="slide-body">
+    <div class="eyebrow">Intern &middot; Zielbild</div>
+    <h2 class="title tight">Von der Kampagnen-Idee zur <em>PKS-Simulation</em></h2>
+    <!-- Use-case flow strip -->
+    <div style="display:flex; align-items:center; gap:0; margin-bottom:14px;">
+      <div style="display:flex; align-items:center; gap:10px; padding:10px 18px; background:var(--magenta-tint); border:1.5px solid var(--magenta); flex-shrink:0;">
+        <span style="font-family:var(--mono); font-size:18px; font-weight:700; color:var(--magenta);">1.</span>
+        <span style="font-size:14px; font-weight:600; color:var(--ink);">PK plant neue Promotion</span>
+      </div>
+      <div style="font-family:var(--font); font-size:22px; color:var(--magenta); padding:0 12px;">&rarr;</div>
+      <div style="display:flex; align-items:center; gap:10px; padding:10px 18px; background:var(--magenta-tint); border:1.5px solid var(--magenta); flex-shrink:0;">
+        <span style="font-family:var(--mono); font-size:18px; font-weight:700; color:var(--magenta);">2.</span>
+        <span style="font-size:14px; font-weight:600; color:var(--ink);">Simulation zeigt PKS-Effekt</span>
+      </div>
+      <div style="font-family:var(--font); font-size:22px; color:var(--magenta); padding:0 12px;">&rarr;</div>
+      <div style="display:flex; align-items:center; gap:10px; padding:10px 18px; background:var(--magenta-tint); border:1.5px solid var(--magenta); flex-shrink:0;">
+        <span style="font-family:var(--mono); font-size:18px; font-weight:700; color:var(--magenta);">3.</span>
+        <span style="font-size:14px; font-weight:600; color:var(--ink);">PK iteriert eigenst&auml;ndig</span>
+      </div>
+      <div style="font-family:var(--font); font-size:22px; color:var(--magenta); padding:0 12px;">&rarr;</div>
+      <div style="display:flex; align-items:center; gap:10px; padding:10px 18px; background:var(--gray-05); border:1.5px solid var(--gray-15); flex-shrink:0;">
+        <span style="font-family:var(--mono); font-size:18px; font-weight:700; color:var(--gray-70);">4.</span>
+        <span style="font-size:14px; font-weight:600; color:var(--ink);">GPRA gibt frei</span>
+      </div>
+    </div>
+
+    <!-- PROTOTYPE FRAME -->
+    <div style="flex:1; min-height:0; border:2px solid var(--gray-15); border-radius:6px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.08); display:grid; grid-template-rows:auto 1fr;">
+
+      <!-- App header -->
+      <div style="background:var(--ink); padding:7px 20px; display:flex; align-items:center; gap:16px;">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <svg width="12" height="15" viewBox="0 0 840 1000"><path d="M200,660H0V460h200V660z M0,0v340h60v-10c0-160,90-260,260-260h10v720c0,100-40,140-140,140h-30v70h520v-70h-30c-100,0-140-40-140-140V70h10c170,0,260,100,260,260v10h60V0H0z M640,660h200V460H640V660z" fill="#E20074"/></svg>
+          <span style="font-family:var(--mono); font-size:10px; color:var(--white); font-weight:600;">PK <span style="color:var(--gray-50); font-weight:400;">BREITBAND</span></span>
+        </div>
+        <div style="display:flex; font-family:var(--mono); font-size:10px;">
+          <span style="padding:5px 10px; color:rgba(255,255,255,0.6);">Daten</span>
+          <span style="padding:5px 10px; color:rgba(255,255,255,0.6);">PKS Erl&ouml;se</span>
+          <span style="padding:5px 10px; color:var(--white); border-bottom:2px solid var(--magenta); font-weight:700;">Simulation</span>
+          <span style="padding:5px 10px; color:rgba(255,255,255,0.6);">Zeitreihen</span>
+        </div>
+        <div style="margin-left:auto;"><span style="font-family:var(--mono); font-size:9px; padding:2px 7px; border:1px solid var(--magenta); color:var(--magenta); font-weight:700; border-radius:3px;">PROTOTYP</span></div>
+      </div>
+
+      <!-- App body -->
+      <div style="display:grid; grid-template-columns:260px 1fr; min-height:0;">
+
+        <!-- Sidebar -->
+        <div style="background:var(--gray-90); padding:20px 20px; overflow-y:auto; color:var(--white); font-size:14px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:14px;"><span style="font-family:var(--mono); font-size:12px; letter-spacing:0.06em; text-transform:uppercase; font-weight:700;">Steuerung</span><span style="font-family:var(--mono); font-size:12px; color:var(--magenta); font-weight:600;">Reset</span></div>
+          <!-- MagentaZuhause section label -->
+          <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; color:var(--white); margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+            <span style="width:6px; height:6px; background:var(--magenta); border-radius:50%; display:inline-block;"></span>MagentaZuhause
+          </div>
+          <div style="display:flex; gap:5px; margin-bottom:16px; flex-wrap:wrap;">
+            <span style="font-family:var(--mono); font-size:12px; padding:5px 10px; border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.65); border-radius:3px;">ADSL</span>
+            <span style="font-family:var(--mono); font-size:12px; padding:5px 10px; border:1.5px solid var(--magenta); color:var(--white); font-weight:700; background:rgba(226,0,116,0.2); border-radius:3px;">VDSL 100</span>
+            <span style="font-family:var(--mono); font-size:12px; padding:5px 10px; border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.65); border-radius:3px;">VDSL 250</span>
+          </div>
+          <div style="font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.6); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px;">Promotions &middot; &sum; 100%</div>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
+            <div style="display:flex; align-items:center;"><span style="min-width:62px;">3&times;9,95</span><div style="flex:1; height:5px; background:rgba(255,255,255,0.08); border-radius:2px;"><div style="height:5px; width:58%; background:var(--magenta); border-radius:2px;"></div></div><span style="font-family:var(--mono); font-size:12px; margin-left:8px; font-weight:600;">58%</span></div>
+            <div style="display:flex; align-items:center;"><span style="min-width:62px;">6&times;9,95</span><div style="flex:1; height:5px; background:rgba(255,255,255,0.08); border-radius:2px;"><div style="height:5px; width:27%; background:var(--magenta); border-radius:2px;"></div></div><span style="font-family:var(--mono); font-size:12px; margin-left:8px; font-weight:600;">27%</span></div>
+            <div style="display:flex; align-items:center;"><span style="min-width:62px;">Flex</span><div style="flex:1; height:5px; background:rgba(255,255,255,0.08); border-radius:2px;"><div style="height:5px; width:15%; background:rgba(255,255,255,0.25); border-radius:2px;"></div></div><span style="font-family:var(--mono); font-size:12px; margin-left:8px; font-weight:600;">15%</span></div>
+          </div>
+          <div style="font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.6); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px;">Young-Anteil</div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:16px;">
+            <span style="color:rgba(255,255,255,0.75);">Segment</span><span style="font-family:var(--mono); font-weight:600;">12%</span>
+          </div>
+          <div style="font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.6); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px;">Cashbacks</div>
+          <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between;"><span style="color:rgba(255,255,255,0.75);">Online-Vorteil</span><span style="font-family:var(--mono); font-weight:600;">100&thinsp;&euro;</span></div>
+            <div style="display:flex; justify-content:space-between;"><span style="color:rgba(255,255,255,0.75);">Ext CB</span><span style="font-family:var(--mono); font-weight:600;">84,70&thinsp;&euro;</span></div>
+          </div>
+          <div style="font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.6); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px;">Channel-Mix</div>
+          <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between;"><span style="color:rgba(255,255,255,0.75);">Online</span><span style="font-family:var(--mono); font-weight:600;">42%</span></div>
+            <div style="display:flex; justify-content:space-between;"><span style="color:rgba(255,255,255,0.75);">Handel</span><span style="font-family:var(--mono); font-weight:600;">38%</span></div>
+            <div style="display:flex; justify-content:space-between;"><span style="color:rgba(255,255,255,0.75);">Service</span><span style="font-family:var(--mono); font-weight:600;">20%</span></div>
+          </div>
+          <div style="font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.6); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:4px;">Verweildauer</div>
+          <div style="font-family:var(--mono); font-size:22px; font-weight:700; margin-bottom:4px;">70,2 <span style="font-size:12px; font-weight:400; color:rgba(255,255,255,0.6);">Mo</span></div>
+          <!-- SECTION DIVIDER: Congstar -->
+          <div style="border-top:2px solid rgba(255,255,255,0.15); margin:14px -20px 14px; padding:12px 20px 0;">
+            <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; color:var(--white); margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+              <span style="width:6px; height:6px; background:var(--magenta); border-radius:50%; display:inline-block;"></span>Congstar-Anteil
+            </div>
+          <div style="margin-bottom:16px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+              <div style="flex:1; height:8px; background:rgba(255,255,255,0.08); border-radius:4px; position:relative;">
+                <div style="height:8px; width:8.2%; background:rgba(255,255,255,0.25); border-radius:4px 0 0 4px; position:absolute; left:0; top:0;"></div>
+                <div style="height:8px; width:50%; background:var(--magenta); border-radius:4px; position:relative;"></div>
+                <div style="position:absolute; top:-4px; left:50%; width:16px; height:16px; background:var(--white); border:2px solid var(--magenta); border-radius:50%; transform:translateX(-50%);"></div>
+              </div>
+              <span style="font-family:var(--mono); font-size:16px; font-weight:700; color:var(--magenta);">50%</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; font-size:13px;">
+              <span style="color:rgba(255,255,255,0.65); text-decoration:line-through;">8,2%</span>
+              <span style="color:rgba(255,255,255,0.6);">&rarr;</span>
+              <span style="color:var(--magenta); font-weight:700;">50%</span>
+              <span style="font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.6); margin-left:auto;">hypothetisch</span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div style="padding:14px 18px; display:flex; flex-direction:column; gap:10px; min-height:0; background:var(--paper);">
+          <!-- KPIs — 50% Congstar scenario: ARPU drops below KeL -->
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1.3fr; gap:8px;">
+            <div style="background:var(--white); border:1px solid var(--gray-15); padding:10px 12px; text-align:center; border-radius:4px;">
+              <div style="font-family:var(--mono); font-size:8px; color:var(--gray-50); letter-spacing:0.05em; text-transform:uppercase;">Baseline &Oslash;</div>
+              <div style="font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">36,36&thinsp;&euro;</div>
+            </div>
+            <div style="background:var(--white); border:1px solid var(--gray-15); padding:10px 12px; text-align:center; border-radius:4px;">
+              <div style="font-family:var(--mono); font-size:8px; color:var(--danger); letter-spacing:0.05em; text-transform:uppercase;">Szenario 50% Congstar</div>
+              <div style="font-size:18px; font-weight:700; color:var(--danger); margin-top:3px;">28,41&thinsp;&euro;</div>
+            </div>
+            <div style="background:var(--white); border:1px solid var(--gray-15); padding:10px 12px; text-align:center; border-radius:4px;">
+              <div style="font-family:var(--mono); font-size:8px; color:var(--gray-50); letter-spacing:0.05em; text-transform:uppercase;">Kosten (KeL)</div>
+              <div style="font-size:18px; font-weight:700; color:var(--ink); margin-top:3px;">29,85&thinsp;&euro;</div>
+            </div>
+            <div style="background:#FFF1F0; border:2px solid var(--danger); padding:10px 12px; text-align:center; border-radius:4px;">
+              <div style="font-family:var(--mono); font-size:8px; color:var(--danger); letter-spacing:0.05em; text-transform:uppercase;">PKS &Delta; &Oslash;</div>
+              <div style="font-size:20px; font-weight:700; color:var(--danger); margin-top:3px;">&minus;1,44&thinsp;&euro;</div>
+              <div style="font-family:var(--mono); font-size:9px; color:var(--danger); font-weight:700;">&#9888; PKS VERLETZT</div>
+            </div>
+          </div>
+
+          <!-- Chart area -->
+          <div style="background:var(--white); border:1px solid var(--gray-15); padding:20px 28px; flex:1; min-height:0; display:flex; flex-direction:column; border-radius:4px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:12px; font-weight:700; color:var(--ink);">PKS &Uuml;berlassung &middot; VDSL 100 &middot; Monatsverlauf</span>
+              <div style="display:flex; gap:14px; font-family:var(--mono); font-size:9px; color:var(--gray-50);">
+                <span style="display:inline-flex; align-items:center; gap:3px;"><span style="width:8px; height:8px; background:var(--magenta); border-radius:2px;"></span>Erl&ouml;s</span>
+                <span style="display:inline-flex; align-items:center; gap:3px;"><span style="width:8px; height:8px; background:var(--gray-30); border-radius:2px;"></span>Kosten (KeL)</span>
+                <span style="display:inline-flex; align-items:center; gap:3px;"><span style="width:8px; height:4px; background:var(--success); border-radius:1px;"></span><span style="width:8px; height:4px; background:var(--danger); border-radius:1px;"></span>PKS &Delta;</span>
+              </div>
+            </div>
+            <!-- Two-part chart: main bars + PKS delta strip below -->
+            <svg viewBox="0 0 900 300" preserveAspectRatio="xMidYMid meet" style="width:100%; flex:1; min-height:0;" xmlns="http://www.w3.org/2000/svg">
+              <!-- Scale: y=210 is 27€, y=10 is 38€. 200px for 11€ = 18.2px/€ -->
+              <g font-family="JetBrains Mono, monospace" font-size="11" fill="var(--gray-70)" text-anchor="end">
+                <text x="30" y="214">27</text><text x="30" y="159">30</text><text x="30" y="105">33</text><text x="30" y="50">36</text><text x="30" y="14">38</text>
+              </g>
+              <g stroke="var(--gray-15)" stroke-width="0.5">
+                <line x1="36" y1="210" x2="870" y2="210"/><line x1="36" y1="155.4" x2="870" y2="155.4"/><line x1="36" y1="100.9" x2="870" y2="100.9"/><line x1="36" y1="46.4" x2="870" y2="46.4"/>
+              </g>
+
+              <!-- Scenario divider -->
+              <line x1="478" y1="5" x2="478" y2="268" stroke="var(--magenta)" stroke-width="1.5" stroke-dasharray="5 3"/>
+              <text x="486" y="16" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="var(--magenta)">SZENARIO 50% CONGSTAR &rarr;</text>
+
+              <!-- Cost bar: 29.85€ → y=210-(29.85-27)*18.2=210-51.9=158.1, h=51.9 -->
+              <!-- === BASELINE Jan-Jun === -->
+              <!-- Jan: Erlös 35.47 → y=210-(35.47-27)*18.2=210-154.1=55.9, h=154.1 -->
+              <rect x="48" y="158" width="28" height="52" rx="2" fill="var(--gray-30)"/>
+              <rect x="78" y="56" width="28" height="154" rx="2" fill="var(--magenta)"/>
+              <!-- Feb 36.12: y=210-166.0=44, h=166 -->
+              <rect x="120" y="158" width="28" height="52" rx="2" fill="var(--gray-30)"/>
+              <rect x="150" y="44" width="28" height="166" rx="2" fill="var(--magenta)"/>
+              <!-- Mar 34.89: y=210-143.6=66.4, h=143.6 -->
+              <rect x="192" y="158" width="28" height="52" rx="2" fill="var(--gray-30)"/>
+              <rect x="222" y="66" width="28" height="144" rx="2" fill="var(--magenta)"/>
+              <!-- Apr 37.21: y=210-185.8=24.2, h=185.8 -->
+              <rect x="264" y="158" width="28" height="52" rx="2" fill="var(--gray-30)"/>
+              <rect x="294" y="24" width="28" height="186" rx="2" fill="var(--magenta)"/>
+              <!-- Mai 36.54: y=210-173.6=36.4, h=173.6 -->
+              <rect x="336" y="158" width="28" height="52" rx="2" fill="var(--gray-30)"/>
+              <rect x="366" y="36" width="28" height="174" rx="2" fill="var(--magenta)"/>
+              <!-- Jun 35.91: y=210-162.2=47.8, h=162.2 -->
+              <rect x="408" y="158" width="28" height="52" rx="2" fill="var(--gray-30)"/>
+              <rect x="438" y="48" width="28" height="162" rx="2" fill="var(--magenta)"/>
+
+              <!-- === SCENARIO Jul-Nov === -->
+              <!-- Jul 28.53: y=210-27.8=182.2, h=27.8 -->
+              <rect x="504" y="158" width="28" height="52" rx="2" fill="var(--gray-30)"/>
+              <rect x="534" y="182" width="28" height="28" rx="2" fill="var(--magenta)" opacity="0.45"/>
+              <!-- Aug 29.12: y=210-38.6=171.4, h=38.6 -->
+              <rect x="576" y="158" width="28" height="52" rx="2" fill="var(--gray-30)"/>
+              <rect x="606" y="171" width="28" height="39" rx="2" fill="var(--magenta)" opacity="0.45"/>
+              <!-- Sep 27.94: y=210-17.1=192.9, h=17.1 -->
+              <rect x="648" y="158" width="28" height="52" rx="2" fill="var(--gray-30)"/>
+              <rect x="678" y="193" width="28" height="17" rx="2" fill="var(--magenta)" opacity="0.45"/>
+              <!-- Okt 28.87: y=210-34.0=176, h=34.0 -->
+              <rect x="720" y="158" width="28" height="52" rx="2" fill="var(--gray-30)"/>
+              <rect x="750" y="176" width="28" height="34" rx="2" fill="var(--magenta)" opacity="0.45"/>
+              <!-- Nov 28.32: y=210-24.0=186, h=24.0 -->
+              <rect x="792" y="158" width="28" height="52" rx="2" fill="var(--gray-30)"/>
+              <rect x="822" y="186" width="28" height="24" rx="2" fill="var(--magenta)" opacity="0.45"/>
+
+              <!-- === PKS IMPACT SECTION (starts at y=240, gap of 20px from chart end at y=220) === -->
+              <!-- Background band -->
+              <rect x="36" y="240" width="834" height="56" rx="3" fill="var(--gray-05)" stroke="var(--gray-15)" stroke-width="0.5"/>
+              <!-- Section label -->
+              <text x="44" y="253" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" letter-spacing="1" fill="var(--gray-70)">PKS IMPACT</text>
+              <line x1="115" y1="250" x2="870" y2="250" stroke="var(--gray-15)" stroke-width="0.5"/>
+
+              <!-- Baseline: green bars -->
+              <rect x="56" y="257" width="44" height="18" rx="2" fill="var(--success)"/>
+              <text x="78" y="288" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--success)">+5,62</text>
+              <rect x="128" y="255" width="44" height="20" rx="2" fill="var(--success)"/>
+              <text x="150" y="288" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--success)">+6,27</text>
+              <rect x="200" y="259" width="44" height="16" rx="2" fill="var(--success)"/>
+              <text x="222" y="288" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--success)">+5,04</text>
+              <rect x="272" y="252" width="44" height="23" rx="2" fill="var(--success)"/>
+              <text x="294" y="288" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--success)">+7,36</text>
+              <rect x="344" y="254" width="44" height="21" rx="2" fill="var(--success)"/>
+              <text x="366" y="288" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--success)">+6,69</text>
+              <rect x="416" y="256" width="44" height="19" rx="2" fill="var(--success)"/>
+              <text x="438" y="288" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--success)">+6,06</text>
+
+              <!-- Scenario: red bars -->
+              <rect x="512" y="264" width="44" height="10" rx="2" fill="var(--danger)"/>
+              <text x="534" y="288" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--danger)">&minus;1,32</text>
+              <rect x="584" y="264" width="44" height="7" rx="2" fill="var(--danger)"/>
+              <text x="606" y="285" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--danger)">&minus;0,73</text>
+              <rect x="656" y="264" width="44" height="14" rx="2" fill="var(--danger)"/>
+              <text x="678" y="292" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--danger)">&minus;1,91</text>
+              <rect x="728" y="264" width="44" height="9" rx="2" fill="var(--danger)"/>
+              <text x="750" y="287" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--danger)">&minus;0,98</text>
+              <rect x="800" y="264" width="44" height="12" rx="2" fill="var(--danger)"/>
+              <text x="822" y="290" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--danger)">&minus;1,53</text>
+
+              <!-- X labels -->
+              <g font-family="JetBrains Mono, monospace" font-size="11" fill="var(--gray-70)" text-anchor="middle">
+                <text x="70" y="220">Jan</text><text x="142" y="220">Feb</text><text x="214" y="220">M&#228;r</text><text x="286" y="220">Apr</text><text x="358" y="220">Mai</text><text x="430" y="220">Jun</text>
+                <text x="526" y="220">Jul</text><text x="598" y="220">Aug</text><text x="670" y="220">Sep</text><text x="742" y="220">Okt</text><text x="814" y="220">Nov</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SLIDE 9 — SYNTHESE ============================ -->
+<section class="slide" data-slide="9">
+  <div class="slide-body">
+    <div class="eyebrow">Prozess &amp; Lage &middot; Das Wichtigste in K&uuml;rze</div>
+    <h2 class="title tight">Vom Argument zum <em>pr&uuml;ff&auml;higen Nachweis</em></h2>
+
+    <div class="three-col" style="margin-top:24px;">
+      <div class="card blue">
+        <div class="card-num">1</div>
+        <div class="card-label">Extern &middot; zuerst</div>
+        <h3>Gezielt challengen</h3>
+        <p>Wettbewerbspreise als Marktbeweis, Verweildauer-Erfolg ausbauen, produktspezifische Zusatzkosten nachweisen &mdash; jeweils mit Verweis auf die BNetzA selbst.</p>
+      </div>
+      <div class="card accent">
+        <div class="card-num">2</div>
+        <div class="card-label">Intern</div>
+        <h3>ODE-Prozess aufbauen</h3>
+        <p>Vom manuellen Excel zur monatlichen ODE-Pipeline mit Abgleich &mdash; die pr&uuml;ffähige Faktenbasis f&uuml;r jede Challenge.</p>
+      </div>
+      <div class="card success">
+        <div class="card-num">3</div>
+        <div class="card-label">Zielbild</div>
+        <h3>PKS in der Kampagne</h3>
+        <p>PK simuliert den PKS-Effekt vor der GPRA-Freigabe &mdash; Steuerung statt nachgelagerter Pr&uuml;fung.</p>
+      </div>
+    </div>
+
+    <!-- CLOSING -->
+    <div style="background:var(--magenta); padding:40px 52px; margin-top:28px;">
+      <div style="font-family:var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.7); font-weight:700; margin-bottom:16px;">Die Kernbotschaft &rarr; Block 4</div>
+      <p style="font-family:var(--font); font-size:26px; color:var(--white); line-height:1.3; font-weight:400;">Bessere Datenqualit&auml;t wird zum zentralen Hebel f&uuml;r mehr <em style="font-style:italic; color:#FFD9EC;">PKS-Headroom</em> &mdash; sie macht aus regulatorischen Argumenten <em style="font-style:italic; color:#FFD9EC;">pr&uuml;ffähige Nachweise</em>.</p>
+      <p style="font-size:16px; color:rgba(255,255,255,0.8); margin-top:16px; font-family:var(--font); line-height:1.55; max-width:92ch;">Damit ist die Grundlage gelegt. Block 4 geht in die BNetzA-Kalkulation im Detail: Wo genau die Stellhebel sitzen und wie eine compliant-effiziente Steuerung aussieht.</p>
+    </div>
+
+    <div style="font-family:var(--mono); font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:var(--magenta); font-weight:700; margin-top:auto; padding-top:12px;">N&auml;chster Block &rarr; 04 &middot; BNetzA-Kalkulation im Detail</div>
+  </div>
+</section>
+
+
+</div><!-- /.deck -->
+
+<!-- ============================ FULLSCREEN BUTTON ============================ -->
+<button class="fullscreen-btn" id="fullscreenBtn" title="Vollbild" aria-label="Vollbild umschalten">
+  <svg id="fsIconExpand" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+  <svg id="fsIconShrink" viewBox="0 0 24 24" style="display:none;"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="10" y1="14" x2="3" y2="21"/></svg>
+</button>
+
+<!-- ============================ DOTS NAV ============================ -->
+<nav class="dots-nav" aria-label="Foliennavigation" id="dotsNav"></nav>
+
+<!-- ============================ MAIN NAV ============================ -->
+<div class="nav" role="toolbar" aria-label="Pr&auml;sentationssteuerung">
+  <button id="prev" title="Zur&uuml;ck" aria-label="Zur&uuml;ck">&larr;</button>
+  <div class="counter"><strong id="curr">01</strong>&nbsp;/&nbsp;<span id="total">01</span></div>
+  <button id="next" title="Weiter" aria-label="Weiter">&rarr;</button>
+</div>
+
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  const dotsNav = document.getElementById('dotsNav');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const currEl = document.getElementById('curr');
+  const totalEl = document.getElementById('total');
+  totalEl.textContent = String(total).padStart(2, '0');
+
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'dot';
+    b.setAttribute('aria-label', 'Folie ' + (i + 1));
+    b.addEventListener('click', () => goTo(i));
+    dotsNav.appendChild(b);
+  });
+  const dots = Array.from(dotsNav.children);
+
+  let idx = 0;
+
+  function goTo(i) {
+    if (i < 0) i = 0;
+    if (i >= total) i = total - 1;
+    slides[idx].classList.remove('active');
+    dots[idx].classList.remove('active');
+    idx = i;
+    slides[idx].classList.add('active');
+    dots[idx].classList.add('active');
+    currEl.textContent = String(idx + 1).padStart(2, '0');
+    prevBtn.disabled = (idx === 0);
+    nextBtn.disabled = (idx === total - 1);
+    history.replaceState(null, '', '#s' + (idx + 1));
+  }
+
+  dots[0].classList.add('active');
+  prevBtn.disabled = true;
+  nextBtn.disabled = (total <= 1);
+
+  const m = location.hash.match(/^#s(\d+)$/);
+  if (m) {
+    const n = parseInt(m[1], 10) - 1;
+    if (n >= 0 && n < total) goTo(n);
+  }
+
+  prevBtn.addEventListener('click', () => goTo(idx - 1));
+  nextBtn.addEventListener('click', () => goTo(idx + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'PageDown':
+      case ' ':
+        e.preventDefault(); goTo(idx + 1); break;
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault(); goTo(idx - 1); break;
+      case 'Home':
+        e.preventDefault(); goTo(0); break;
+      case 'End':
+        e.preventDefault(); goTo(total - 1); break;
+      case 'f':
+      case 'F':
+        e.preventDefault();
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen?.();
+        } else {
+          document.exitFullscreen?.();
+        }
+        break;
+    }
+    if (/^[1-9]$/.test(e.key)) {
+      const n = parseInt(e.key, 10) - 1;
+      if (n < total) goTo(n);
+    }
+  });
+
+  document.querySelector('.deck').addEventListener('click', (e) => {
+    if (e.target.closest('button, a, .nav, .dots-nav, input, label')) return;
+    const x = e.clientX;
+    const w = window.innerWidth;
+    if (x > w * 0.7) goTo(idx + 1);
+    else if (x < w * 0.3) goTo(idx - 1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) < 60) return;
+    if (dx < 0) goTo(idx + 1); else goTo(idx - 1);
+  }, { passive: true });
+})();
+
+// ---------- FULLSCREEN BUTTON ----------
+(function() {
+  const btn = document.getElementById('fullscreenBtn');
+  const iconExpand = document.getElementById('fsIconExpand');
+  const iconShrink = document.getElementById('fsIconShrink');
+  if (!btn) return;
+
+  function updateIcon() {
+    const isFs = !!document.fullscreenElement;
+    iconExpand.style.display = isFs ? 'none' : 'block';
+    iconShrink.style.display = isFs ? 'block' : 'none';
+  }
+
+  btn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  });
+
+  document.addEventListener('fullscreenchange', updateIcon);
+})();
+
+// ---------- CHART TOGGLE ----------
+function showChart(mode) {
+  var avg = document.getElementById('chartAvg60');
+  var agb = document.getElementById('chartAgb');
+  var togAvg = document.getElementById('togAvg60');
+  var togAgb = document.getElementById('togAgb');
+  var title = document.getElementById('chartTitle');
+  var subtitle = document.getElementById('chartSubtitle');
+  var time = document.getElementById('chartTime');
+  var togTime = document.getElementById('togTime');
+  [togAvg,togAgb,togTime].forEach(function(b){b.style.background='transparent';b.style.color='#4A4A4A';});
+  avg.style.display='none'; agb.style.display='none'; time.style.display='none';
+  if (mode === 'agb') {
+    agb.style.display = 'flex';
+    togAgb.style.background = '#0A0A0A';
+    togAgb.style.color = '#fff';
+    title.textContent = 'AGB-Listenpreis (ohne Aktionen)';
+    subtitle.innerHTML = '€/Monat brutto · Double Play · Stand Mai 2026';
+  } else if (mode === 'time') {
+    time.style.display = 'flex';
+    togTime.style.background = '#0A0A0A';
+    togTime.style.color = '#fff';
+    title.textContent = 'Telekom vs. Wettbewerber im Zeitverlauf';
+    subtitle.innerHTML = '';
+  } else {
+    avg.style.display = 'flex';
+    togAvg.style.background = '#0A0A0A';
+    togAvg.style.color = '#fff';
+    title.textContent = 'Durchschnittspreis über 60 Monate';
+    subtitle.innerHTML = '€/Monat brutto · Double Play · Stand Mai 2026';
+  }
+}
+</script>
+
+</body>
+</html>
