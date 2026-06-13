@@ -2878,6 +2878,7 @@
     html, body { overflow: visible; height: auto; background: white; margin: 0; }
     .deck { height: auto; width: 100%; }
     .slide { display: flex !important; position: relative; page-break-after: always; page-break-inside: avoid; width: 13.333in; height: 7.5in; min-height: 0; padding: 0.5in 0.7in; overflow: hidden; }
+    .slide:last-of-type { page-break-after: avoid; }
     .slide.cover.active, .slide.cover { flex-direction: row; }
     .nav, .dots-nav, .fullscreen-btn { display: none !important; }
     .popover-overlay { display: none !important; }
@@ -3335,12 +3336,12 @@
       <div style="background:#FFF8F8; border:1.5px solid var(--danger); padding:16px 22px; display:flex; flex-direction:column; justify-content:center;">
         <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
           <span style="font-family:var(--mono); font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--danger); font-weight:700;">Promos, Cashback &amp; Congstar</span>
-          <span style="font-family:var(--font); font-weight:800; font-size:26px; color:var(--danger); line-height:1;">&minus;5,27&thinsp;&euro;</span>
+          <span style="font-family:var(--font); font-weight:800; font-size:26px; color:var(--danger); line-height:1;">&minus;4,94&thinsp;&euro;</span>
         </div>
         <div style="display:flex; flex-direction:column; gap:7px;">
           <div style="display:flex; justify-content:space-between; font-size:13px; color:var(--gray-90);"><span>Intro-Promo <span style="color:var(--gray-50);">(3&times;9,95&thinsp;&euro;)</span></span><span style="font-family:var(--mono); font-weight:700;">&minus;1,67&thinsp;&euro;</span></div>
-          <div style="display:flex; justify-content:space-between; font-size:13px; color:var(--gray-90);"><span>Congstar-Mix <span style="color:var(--gray-50);">(15&thinsp;%)</span></span><span style="font-family:var(--mono); font-weight:700;">&minus;1,63&thinsp;&euro;</span></div>
           <div style="display:flex; justify-content:space-between; font-size:13px; color:var(--gray-90);"><span>Cashback <span style="color:var(--gray-50);">(240&thinsp;&euro;, 34&thinsp;%)</span></span><span style="font-family:var(--mono); font-weight:700;">&minus;1,22&thinsp;&euro;</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:13px; color:var(--gray-90);"><span>Congstar-Mix <span style="color:var(--gray-50);">(15&thinsp;%)</span></span><span style="font-family:var(--mono); font-weight:700;">&minus;1,05&thinsp;&euro;</span></div>
           <div style="font-size:11.5px; color:var(--gray-50); border-top:1px solid rgba(217,19,8,0.18); padding-top:6px;">gr&ouml;&szlig;te Treiber &middot; u.&thinsp;a. Online-Vorteil &amp; Young-Rabatt</div>
         </div>
       </div>
@@ -3349,13 +3350,14 @@
       <!-- Result: ARPU -->
       <div style="background:var(--magenta); color:var(--white); padding:20px 24px; display:flex; flex-direction:column; justify-content:center;">
         <div style="font-family:var(--mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.85); font-weight:700; margin-bottom:8px;">&Uuml;berlassungs-ARPU</div>
-        <div style="font-family:var(--font); font-weight:800; font-size:42px; line-height:1;">35,86<span style="font-size:18px; font-weight:400; opacity:0.8;">&thinsp;&euro;</span></div>
-        <div style="font-size:13px; color:rgba(255,255,255,0.88); margin-top:6px; line-height:1.4;">netto/Mo &middot; Erl&ouml;sbasis des PKS-Tests</div>
+        <div style="font-family:var(--font); font-weight:800; font-size:42px; line-height:1;">36,19<span style="font-size:18px; font-weight:400; opacity:0.8;">&thinsp;&euro;</span></div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.88); margin-top:6px; line-height:1.4;">netto/Mo &middot; Kern der PKS-Erl&ouml;sseite</div>
       </div>
     </div>
 
     <!-- 3 PRINZIPIEN -->
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; flex:1; min-height:0;">
+    <div style="font-family:var(--mono); font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--magenta); font-weight:700; margin-bottom:12px;">Drei Prinzipien, die den Preis bestimmen</div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
       <div style="background:var(--white); border:1px solid var(--gray-15); border-left:4px solid var(--magenta); padding:22px 26px; display:flex; flex-direction:column; justify-content:center;">
         <div style="display:flex; align-items:center; gap:14px; margin-bottom:12px;">
           <span style="font-family:var(--font); font-style:italic; font-size:42px; color:var(--magenta); line-height:1;">1</span>
@@ -3379,7 +3381,13 @@
       </div>
     </div>
 
-    <div style="font-family:var(--mono); font-size:11px; color:var(--gray-50); margin-top:14px;">Beispiel MagentaZuhause L &middot; illustrativ &middot; Detail-Simulation auf der n&auml;chsten Folie</div>
+    <!-- TAKEAWAY -->
+    <div style="background:var(--ink); padding:16px 28px; margin-top:auto; display:flex; align-items:center; gap:22px;">
+      <span style="font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--magenta); font-weight:700; flex-shrink:0;">Management-Takeaway</span>
+      <p style="font-size:15px; color:var(--white); line-height:1.45; font-family:var(--font);">Aus <strong style="color:#FFD9EC;">41,13&thinsp;&euro;</strong> Listenpreis wird &uuml;ber Promos, Reichweite und Laufzeit eine reale &Uuml;berlassung von <strong style="color:#FFD9EC;">36,19&thinsp;&euro;</strong> &mdash; die Basis, gegen die im PKS-Test die Kostenseite gepr&uuml;ft wird. Jeder Hebel wirkt nur so stark, wie er Kunden erreicht.</p>
+    </div>
+
+    <div style="font-family:var(--mono); font-size:11px; color:var(--gray-50); margin-top:12px;">Beispiel MagentaZuhause L &middot; illustrativ &middot; Detail-Simulation auf der n&auml;chsten Folie</div>
   </div>
 </section>
 
@@ -3497,8 +3505,8 @@
             <tr class="section-row"><td colspan="3" style="border-left-color:var(--gray-70);">Congstar (gleiche Geschwindigkeitsklasse)</td></tr>
             <tr class="calc-row" data-calc="36 &euro; &divide; 1,19 = 30,25 &euro; netto (flat, keine Promos). Diff. zum Hauptmarken-ARPU &times; 15 % Congstar-Anteil." style="background:#F8F8F6;">
               <td><div class="row-label" style="display:flex; align-items:center; gap:10px;"><span style="font-family:var(--font); font-weight:800; font-size:13px; letter-spacing:-0.01em; background:var(--ink); color:var(--white); padding:2px 9px; border-radius:3px;">congstar</span>L (100 Mbit/s) <span style="font-family:var(--mono); font-size:16px; font-weight:700; color:var(--magenta); margin-left:6px;">30,25&thinsp;&euro; netto</span></div><div class="row-detail">36&thinsp;&euro; brutto &divide; 1,19 &middot; flat, keine Promos</div></td>
-              <td class="row-assumption" id="res-congstar-pct">(41,13 &minus; 30,25) &times; 15%</td>
-              <td class="row-value negative" id="res-congstar">&minus;1,63&thinsp;&euro;</td>
+              <td class="row-assumption" id="res-congstar-pct">(37,24 &minus; 30,25) &times; 15%</td>
+              <td class="row-value negative" id="res-congstar">&minus;1,05&thinsp;&euro;</td>
             </tr>
             <tr class="result-row">
               <td><div class="row-label">Gewichteter ARPU (netto) = &Uuml;berlassung</div></td>
@@ -3633,31 +3641,31 @@
           <!-- Intro -->
           <div>
             <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px;"><span style="font-size:14.5px; font-weight:700; color:var(--ink);">Intro-Promo <span style="font-weight:400; color:var(--gray-50); font-size:12px;">3&times;9,95&thinsp;&euro;</span></span><span style="font-family:var(--mono); font-size:15px; font-weight:700; color:var(--magenta);">&minus;1,67&thinsp;&euro;</span></div>
-            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:47%; background:var(--magenta); border-radius:5px;"></div></div>
+            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:100%; background:var(--magenta); border-radius:5px;"></div></div>
             <div style="font-size:11.5px; color:var(--gray-50); margin-top:4px;">alle Neukunden &middot; 3 Monate</div>
-          </div>
-          <!-- Congstar -->
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px;"><span style="font-size:14.5px; font-weight:700; color:var(--ink);">Congstar-Mix <span style="font-weight:400; color:var(--gray-50); font-size:12px;">15&thinsp;%</span></span><span style="font-family:var(--mono); font-size:15px; font-weight:700; color:var(--magenta);">&minus;1,63&thinsp;&euro;</span></div>
-            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:46%; background:var(--magenta); border-radius:5px;"></div></div>
-            <div style="font-size:11.5px; color:var(--gray-50); margin-top:4px;">Zweitmarke &middot; 30,25&thinsp;&euro; ARPU (flat)</div>
           </div>
           <!-- Cashback -->
           <div>
             <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px;"><span style="font-size:14.5px; font-weight:700; color:var(--ink);">Cashback <span style="font-weight:400; color:var(--gray-50); font-size:12px;">240&thinsp;&euro;</span></span><span style="font-family:var(--mono); font-size:15px; font-weight:700; color:var(--magenta);">&minus;1,22&thinsp;&euro;</span></div>
-            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:34%; background:var(--magenta); border-radius:5px;"></div></div>
+            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:73%; background:var(--magenta); border-radius:5px;"></div></div>
             <div style="font-size:11.5px; color:var(--gray-50); margin-top:4px;">erreicht nur 34&thinsp;% &middot; Online-Ext</div>
+          </div>
+          <!-- Congstar -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px;"><span style="font-size:14.5px; font-weight:700; color:var(--ink);">Congstar-Mix <span style="font-weight:400; color:var(--gray-50); font-size:12px;">15&thinsp;%</span></span><span style="font-family:var(--mono); font-size:15px; font-weight:700; color:var(--magenta);">&minus;1,05&thinsp;&euro;</span></div>
+            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:63%; background:var(--magenta); border-radius:5px;"></div></div>
+            <div style="font-size:11.5px; color:var(--gray-50); margin-top:4px;">Zweitmarke &middot; 30,25&thinsp;&euro; vs. 37,24&thinsp;&euro; Hauptmarke</div>
           </div>
           <!-- Online -->
           <div>
             <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px;"><span style="font-size:14.5px; font-weight:700; color:var(--ink);">Online-Vorteil <span style="font-weight:400; color:var(--gray-50); font-size:12px;">100&thinsp;&euro;</span></span><span style="font-family:var(--mono); font-size:15px; font-weight:700; color:var(--magenta);">&minus;0,72&thinsp;&euro;</span></div>
-            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:20%; background:var(--magenta); border-radius:5px;"></div></div>
+            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:43%; background:var(--magenta); border-radius:5px;"></div></div>
             <div style="font-size:11.5px; color:var(--gray-50); margin-top:4px;">erreicht 42&thinsp;% der Kunden</div>
           </div>
           <!-- Young -->
           <div>
             <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px;"><span style="font-size:14.5px; font-weight:700; color:var(--ink);">Young-Rabatt</span><span style="font-family:var(--mono); font-size:15px; font-weight:700; color:var(--magenta);">&minus;0,18&thinsp;&euro;</span></div>
-            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:5%; background:var(--magenta); border-radius:5px;"></div></div>
+            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:11%; background:var(--magenta); border-radius:5px;"></div></div>
             <div style="font-size:11.5px; color:var(--gray-50); margin-top:4px;">12&thinsp;% Segment &middot; Monat 4&ndash;24</div>
           </div>
         </div>
@@ -3669,14 +3677,14 @@
         <div style="display:flex; flex-direction:column; gap:24px; flex:1; justify-content:center;">
           <!-- Verweildauer -->
           <div>
-            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px;"><span style="font-size:14.5px; font-weight:700; color:var(--ink);">Verweildauer verteidigen</span><span style="font-family:var(--mono); font-size:15px; font-weight:700; color:var(--success);">+3,56&thinsp;&euro;</span></div>
-            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:100%; background:var(--success); border-radius:5px;"></div></div>
-            <div style="font-size:11.5px; color:var(--gray-50); margin-top:4px;">58,71 &rarr; 100 Monate &middot; Einmalkosten verteilen sich</div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px;"><span style="font-size:14.5px; font-weight:700; color:var(--ink);">Verweildauer verteidigen</span><span style="font-family:var(--mono); font-size:15px; font-weight:700; color:var(--success);">+1,37&thinsp;&euro;</span></div>
+            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:82%; background:var(--success); border-radius:5px;"></div></div>
+            <div style="font-size:11.5px; color:var(--gray-50); margin-top:4px;">58,71 &rarr; 100 Monate &middot; auf den &Uuml;berlassungs-ARPU</div>
           </div>
           <!-- Bereitstellung -->
           <div>
             <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px;"><span style="font-size:14.5px; font-weight:700; color:var(--ink);">Bereitstellung erheben</span><span style="font-family:var(--mono); font-size:15px; font-weight:700; color:var(--success);">+1,06&thinsp;&euro;</span></div>
-            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:30%; background:var(--success); border-radius:5px;"></div></div>
+            <div style="height:9px; background:var(--gray-15); border-radius:5px; overflow:hidden;"><div style="height:100%; width:63%; background:var(--success); border-radius:5px;"></div></div>
             <div style="font-size:11.5px; color:var(--gray-50); margin-top:4px;">69,95&thinsp;&euro; statt 0&thinsp;&euro;-Aktion &middot; als Annuit&auml;t</div>
           </div>
         </div>
@@ -3689,7 +3697,7 @@
     <!-- TAKEAWAY -->
     <div style="background:var(--ink); padding:16px 28px; margin-top:16px; display:flex; align-items:center; gap:22px;">
       <span style="font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--magenta); font-weight:700; flex-shrink:0;">Management-Takeaway</span>
-      <p style="font-size:15px; color:var(--white); line-height:1.45; font-family:var(--font);">Die <strong style="color:#FFD9EC;">Reichweite</strong> entscheidet: Cashback kostet fast so viel wie die Intro-Promo f&uuml;r <em>alle</em> &mdash; erreicht aber nur ein Drittel der Kunden. G&uuml;nstigster Akquise-Hebel je erreichtem Kunden ist der <strong style="color:#FFD9EC;">Online-Vorteil</strong>. Und Verweildauer verteidigen bringt mehr Spielraum, als jede einzelne Promo kostet.</p>
+      <p style="font-size:15px; color:var(--white); line-height:1.45; font-family:var(--font);">Die <strong style="color:#FFD9EC;">Reichweite</strong> entscheidet: <strong style="color:#FFD9EC;">Cashback</strong> ist je erreichtem Kunden der teuerste Akquise-Hebel &mdash; er erreicht nur ein Drittel der Kunden, w&auml;hrend Intro-Promo und Online-Vorteil breiter und g&uuml;nstiger wirken. Dem gegen&uuml;ber gewinnen zwei Hebel Spielraum <em>zur&uuml;ck</em> &mdash; Verweildauer verteidigen und Bereitstellung erheben &mdash; ohne Nachteil f&uuml;rs Angebot.</p>
     </div>
   </div>
 </section>
@@ -3763,18 +3771,18 @@
         <div class="to-body">
           <div class="to-option">
             <div class="to-opt-label">15 % Congstar</div>
-            <div class="to-opt-value">&minus;1,63&thinsp;&euro;</div>
+            <div class="to-opt-value">&minus;1,05&thinsp;&euro;</div>
             <div class="to-opt-detail">PKS-Belastung</div>
           </div>
           <div class="to-divider">vs.</div>
           <div class="to-option">
             <div class="to-opt-label">25 % Congstar</div>
-            <div class="to-opt-value">&minus;2,72&thinsp;&euro;</div>
+            <div class="to-opt-value">&minus;1,75&thinsp;&euro;</div>
             <div class="to-opt-detail">PKS-Belastung</div>
           </div>
         </div>
         <div class="to-footer">
-          Differenz: <span class="to-delta negative">&minus;1,09&thinsp;&euro;/Mo</span> &mdash; Jeder Prozentpunkt Shift zu Congstar kostet <strong>~0,11&thinsp;&euro;/Mo</strong> im gewichteten ARPU.
+          Differenz: <span class="to-delta negative">&minus;0,70&thinsp;&euro;/Mo</span> &mdash; Jeder Prozentpunkt Shift zu Congstar kostet <strong>~0,07&thinsp;&euro;/Mo</strong> im gewichteten ARPU (Diff. zur Hauptmarke 37,24&thinsp;&euro;).
         </div>
       </div>
 
@@ -3835,18 +3843,18 @@
         <div class="to-body">
           <div class="to-option">
             <div class="to-opt-label">58,71 Monate (BNetzA)</div>
-            <div class="to-opt-value">35,86&thinsp;&euro;</div>
+            <div class="to-opt-value">36,19&thinsp;&euro;</div>
             <div class="to-opt-detail">&Uuml;berlassungs-ARPU &middot; MZ L</div>
           </div>
           <div class="to-divider">vs.</div>
           <div class="to-option">
             <div class="to-opt-label">100 Monate</div>
-            <div class="to-opt-value">39,42&thinsp;&euro;</div>
+            <div class="to-opt-value">37,56&thinsp;&euro;</div>
             <div class="to-opt-detail">&Uuml;berlassungs-ARPU &middot; MZ L</div>
           </div>
         </div>
         <div class="to-footer">
-          Differenz: <span class="to-delta positive">+3,56&thinsp;&euro;/Mo</span> &mdash; L&auml;ngere Verweildauer hebt den ARPU: Einmalkosten verteilen sich, <strong>mehr AGB-Monate</strong> flie&szlig;en in den Durchschnitt.
+          Differenz: <span class="to-delta positive">+1,37&thinsp;&euro;/Mo</span> &mdash; L&auml;ngere Verweildauer hebt den ARPU: Einmalkosten verteilen sich, <strong>mehr AGB-Monate</strong> flie&szlig;en in den Durchschnitt.
         </div>
       </div>
 
@@ -3867,7 +3875,7 @@
     <div style="margin-top: 48px; display: flex; gap: 32px; align-items: center;">
       <div style="background: var(--magenta-tint); border: 1.5px solid var(--magenta); padding: 24px 32px; text-align: center;">
         <div style="font-family: var(--mono); font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--magenta); font-weight: 700; margin-bottom: 8px;">Erl&ouml;sseite</div>
-        <div style="font-family: var(--font); font-size: 28px; font-weight: 700; color: var(--magenta);" id="s7-erloese">~35,86&thinsp;&euro;</div>
+        <div style="font-family: var(--font); font-size: 28px; font-weight: 700; color: var(--magenta);" id="s7-erloese">~35,88&thinsp;&euro;</div>
         <div style="font-size: 14px; color: var(--gray-70); margin-top: 6px;">Was der Kunde bringt</div>
       </div>
       <div style="font-family: var(--font); font-style: italic; font-size: 48px; color: var(--gray-50);">&minus;</div>
@@ -4494,7 +4502,7 @@
     const s5Total = document.getElementById('s5-total');
     const s7Erloese = document.getElementById('s7-erloese');
     if (s5Ue) s5Ue.innerHTML = fmt(blendedArpu) + '&thinsp;€';
-    const totalErloese = blendedArpu + 0.64 - 0.74 - 0.17;
+    const totalErloese = blendedArpu + 0.60 - 0.74 - 0.17;
     if (s5Total) s5Total.innerHTML = '~' + fmt(totalErloese) + '&thinsp;€';
     if (s7Erloese) s7Erloese.innerHTML = '~' + fmt(totalErloese) + '&thinsp;€';
 
